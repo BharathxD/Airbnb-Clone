@@ -14,7 +14,7 @@ const Search: FC<SearchProps> = () => {
           Any Week
         </div>
         <div className="text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3">
-          <div className="hidden m-block">Add Guests</div>
+          <div className="hidden md:block">Add Guests</div>
           <div className="p-2 bg-rose-500 rounded-full text-white">
             <BiSearch size={18} />
           </div>
