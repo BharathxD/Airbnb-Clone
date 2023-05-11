@@ -32,7 +32,7 @@ const UserMenu = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm border-[1px]">
+        <div className="absolute mt-3 xl:mt-2 rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 text-sm border-[1px]">
           <div className="flex flex-col cursor-pointer">
             <Fragment>
               <MenuItem onClick={() => {}} label="Login" />

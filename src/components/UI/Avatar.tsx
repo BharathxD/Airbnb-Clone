@@ -1,11 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { FC } from "react";
 
-interface AvatarProps {}
-
-const Avatar: FC<AvatarProps> = () => {
+const Avatar = () => {
   return (
     <Image
       className="rounded-full"

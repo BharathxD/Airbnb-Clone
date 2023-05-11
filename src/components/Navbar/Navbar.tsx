@@ -1,12 +1,11 @@
+"use client";
+
 import Container from "../UI/Container";
-import { FC } from "react";
 import Logo from "../UI/Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 
-interface NavbarProps {}
-
-const Navbar: FC<NavbarProps> = () => {
+const Navbar = () => {
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
       <div className="py-4 border-b-[1px]F">
