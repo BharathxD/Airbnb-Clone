@@ -1,6 +1,7 @@
 import Container from "../UI/Container";
 import { FC } from "react";
 import Logo from "../UI/Logo";
+import Search from "../Search/Search";
 
 interface NavbarProps {}
 
@@ -11,6 +12,7 @@ const Navbar: FC<NavbarProps> = () => {
         <Container>
           <div className="flex flex-grow items-center justify-between gap-3 md:gap-0">
             <Logo />
+            <Search />
           </div>
         </Container>
       </div>
