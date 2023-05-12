@@ -12,6 +12,7 @@ import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import Input from "../UI/Input";
 import { toast } from "react-hot-toast";
+import Button from "../UI/Button";
 
 interface RegisterModalProps {}
 
@@ -77,6 +78,24 @@ const RegisterModal: FC<RegisterModalProps> = () => {
     </div>
   );
 
+  const footerContent = (
+    <div className="flex flex-col gap-4 mt-3">
+      <hr />
+      <Button
+        icon={FcGoogle}
+        label="Continue with Google"
+        onClick={() => {}}
+        outline
+      />
+      <Button
+        icon={AiFillGithub}
+        label="Continue with Github"
+        onClick={() => {}}
+        outline
+      />
+    </div>
+  );
+
   return (
     <Modal
       disabled={isLoading}
@@ -86,6 +105,7 @@ const RegisterModal: FC<RegisterModalProps> = () => {
       onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={body}
+      footer={footerContent}
     />
   );
 };
