@@ -9,6 +9,7 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 
 import { FC, Fragment } from "react";
 import Modal from "./Modal";
+import Heading from "../UI/Heading";
 
 interface RegisterModalProps {}
 
@@ -42,6 +43,12 @@ const RegisterModal: FC<RegisterModalProps> = () => {
     }
   };
 
+  const body = (
+    <div className="flex flex-col gap-4">
+      <Heading title="Register"/>
+    </div>
+  );
+
   return (
     <Modal
       disabled={isLoading}
@@ -50,6 +57,7 @@ const RegisterModal: FC<RegisterModalProps> = () => {
       actionLabel="Continue"
       onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
+      body={body}
     />
   );
 };
