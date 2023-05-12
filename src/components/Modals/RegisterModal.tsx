@@ -10,6 +10,7 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 import { FC, Fragment } from "react";
 import Modal from "./Modal";
 import Heading from "../UI/Heading";
+import Input from "../UI/Input";
 
 interface RegisterModalProps {}
 
@@ -45,7 +46,31 @@ const RegisterModal: FC<RegisterModalProps> = () => {
 
   const body = (
     <div className="flex flex-col gap-4">
-      <Heading title="Register"/>
+      <Heading title="Welcome to Airbnb" subtitle="Create an account" />
+      <Input
+        id="email"
+        label="Email"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input
+        id="name"
+        label="Name"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input
+        id="password"
+        label="Password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
     </div>
   );
 
