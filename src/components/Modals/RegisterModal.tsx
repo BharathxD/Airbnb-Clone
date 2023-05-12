@@ -11,6 +11,7 @@ import { FC, Fragment } from "react";
 import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import Input from "../UI/Input";
+import { toast } from "react-hot-toast";
 
 interface RegisterModalProps {}
 
@@ -31,13 +32,15 @@ const RegisterModal: FC<RegisterModalProps> = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
+      console.log("TRIGGERED");
       setIsLoading(true);
       const response = await axios.post(`/api/register`, data);
       if (response.status !== 200) {
-        return;
+        throw new Error("Something went wrong");
       }
       registerModal.onClose();
     } catch (error: any) {
+      toast.error("Something went wrong");
       console.log(error);
     } finally {
       setIsLoading(false);

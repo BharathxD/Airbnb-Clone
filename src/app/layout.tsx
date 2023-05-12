@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar/Navbar";
 import "./globals.css";
 import { Montserrat } from "next/font/google";
 import RegisterModal from "@/components/Modals/RegisterModal";
+import ToasterProvider from "../providers/ToasterProvider";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -17,7 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressContentEditableWarning={true}>
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <ToasterProvider />
         <RegisterModal />
         <Navbar />
         {children}
