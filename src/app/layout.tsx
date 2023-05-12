@@ -1,3 +1,4 @@
+import Modal from "@/components/Modals/Modal";
 import Navbar from "../components/Navbar/Navbar";
 import "./globals.css";
 import { Montserrat } from "next/font/google";
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressContentEditableWarning={true}>
+        <Modal isOpen={true}/>
         <Navbar />
         {children}
       </body>
