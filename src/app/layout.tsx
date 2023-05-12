@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressContentEditableWarning={true}>
-        <Modal isOpen={true}/>
+        <Modal isOpen={true} title="Login Modal" />
         <Navbar />
         {children}
       </body>
