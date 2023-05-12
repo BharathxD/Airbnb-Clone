@@ -28,6 +28,8 @@ const Button: FC<ButtonProps> = ({
       ${outline ? `bg-white` : `bg-rose-500`}
       ${outline ? `border-black` : `bg-rose-500`}
       ${outline ? `text-black` : `text-white`}
+      ${outline ? `text-black` : `text-white`}
+      ${outline && `hover:bg-zinc-100`}
       ${small ? `py-1` : `py-3`}
       ${small ? `text-sm` : `text-md`}
       ${small ? `font-light` : `font-semibold`}

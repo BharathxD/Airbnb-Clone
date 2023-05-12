@@ -49,8 +49,8 @@ const RegisterModal: FC<RegisterModalProps> = () => {
   };
 
   const body = (
-    <div className="flex flex-col gap-4">
-      <Heading title="Welcome to Airbnb" subtitle="Create an account" />
+    <div className="flex flex-col gap-5">
+      <Heading title="Welcome to Airbnb" subtitle="Create an account" center />
       <Input
         id="email"
         label="Email"
@@ -93,6 +93,14 @@ const RegisterModal: FC<RegisterModalProps> = () => {
         onClick={() => {}}
         outline
       />
+      <div className="text-neutral-500 text-center mt-4 font-light">
+        <div className="flex flex-row items-center gap-2 justify-center">
+          <div>Already have an account?</div>
+          <div className="text-neutral-600 cursor-pointer hover:underline font-medium">
+            Log in
+          </div>
+        </div>
+      </div>
     </div>
   );
 
