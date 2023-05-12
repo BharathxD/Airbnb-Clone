@@ -1,7 +1,7 @@
-import Modal from "@/components/Modals/Modal";
 import Navbar from "../components/Navbar/Navbar";
 import "./globals.css";
 import { Montserrat } from "next/font/google";
+import RegisterModal from "@/components/Modals/RegisterModal";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressContentEditableWarning={true}>
-        <Modal actionLabel="Login" isOpen={true} title="Login Modal" />
+        <RegisterModal />
         <Navbar />
         {children}
       </body>
