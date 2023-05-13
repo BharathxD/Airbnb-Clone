@@ -3,20 +3,34 @@
 import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { useCallback, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import {
+  FieldValues,
+  SubmitHandler,
+  ValidationRule,
+  useForm,
+} from "react-hook-form";
 import useRegisterModal from "@/hooks/useRegisterModal";
 
-import { FC, Fragment } from "react";
 import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import Input from "../UI/Input";
 import { toast } from "react-hot-toast";
 import Button from "../UI/Button";
 
-interface RegisterModalProps {}
+export type RegisterOptions = Partial<{
+  maxLength: ValidationRule<number | string>;
+  minLength: ValidationRule<number | string>;
+}>;
 
-const RegisterModal: FC<RegisterModalProps> = () => {
+const errorToast = (message: string, id?: string) => {
+  return toast.error(message, {
+    duration: 10000,
+    id,
+  });
+};
+
+const RegisterModal = () => {
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
@@ -33,16 +47,22 @@ const RegisterModal: FC<RegisterModalProps> = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log("TRIGGERED");
       setIsLoading(true);
+      toast.loading(`Hold on, ${data.name}!`, {
+        id: "loading",
+      });
       const response = await axios.post(`/api/register`, data);
+      toast.dismiss("loading");
       if (response.status !== 200) {
-        throw new Error("Something went wrong");
+        throw new Error("Something went wrong.");
       }
       registerModal.onClose();
     } catch (error: any) {
-      toast.error("Something went wrong");
-      console.log(error);
+      toast.dismiss("loading");
+      if (error.response.status === 403) {
+        return errorToast("User already exists");
+      }
+      errorToast("Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -54,6 +74,7 @@ const RegisterModal: FC<RegisterModalProps> = () => {
       <Input
         id="email"
         label="Email"
+        type="email"
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -70,9 +91,11 @@ const RegisterModal: FC<RegisterModalProps> = () => {
       <Input
         id="password"
         label="Password"
+        type="password"
         disabled={isLoading}
         register={register}
         errors={errors}
+        minLength={6}
         required
       />
     </div>
