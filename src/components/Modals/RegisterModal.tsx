@@ -46,23 +46,29 @@ const RegisterModal = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setIsLoading(true);
+    toast.loading(`Please wait, ${data.name}!`, {
+      id: "loading",
+    });
+
     try {
-      setIsLoading(true);
-      toast.loading(`Hold on, ${data.name}!`, {
-        id: "loading",
-      });
       const response = await axios.post(`/api/register`, data);
       toast.dismiss("loading");
+
       if (response.status !== 200) {
-        throw new Error("Something went wrong.");
+        throw new Error("Oops! Something went wrong.");
       }
+
       registerModal.onClose();
     } catch (error: any) {
       toast.dismiss("loading");
-      if (error.response.status === 403) {
-        return errorToast("User already exists");
+      if (error?.response?.status === 403) {
+        errorToast(
+          "User already exists. Please try again with a different email."
+        );
+      } else {
+        errorToast("Oops! Something went wrong. Please try again later.");
       }
-      errorToast("Something went wrong");
     } finally {
       setIsLoading(false);
     }
