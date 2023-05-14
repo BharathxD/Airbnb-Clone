@@ -6,6 +6,9 @@ const errorToast = (message: string, id?: string) => {
   return toast.error(message, {
     duration: 10000,
     id,
+    style: {
+      minWidth: "max-content",
+    },
   });
 };
 

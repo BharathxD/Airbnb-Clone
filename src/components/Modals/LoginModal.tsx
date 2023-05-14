@@ -19,6 +19,7 @@ import { toast } from "react-hot-toast";
 import Button from "../UI/Button";
 import errorToast from "../UI/ErrorToast";
 import useRegisterModal from "@/hooks/useRegisterModal";
+import { StatusCodes } from "http-status-codes";
 
 const LoginModal = () => {
   const loginModal = useLoginModal();
@@ -37,23 +38,18 @@ const LoginModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    toast.loading(`Please wait, ${data.name}!`, {
-      id: "loading",
-    });
 
     try {
       const response = await axios.post(`/api/login`, data);
-      toast.dismiss("loading");
 
-      if (response.status !== 200) {
+      if (response.status !== StatusCodes.OK) {
         throw new Error("Oops! Something went wrong.");
       }
 
       loginModal.onClose();
     } catch (error: any) {
-      toast.dismiss("loading");
-      if (error?.response?.status === 404) {
-        errorToast("User doesn't exist.");
+      if (error?.response?.status === StatusCodes.UNAUTHORIZED) {
+        errorToast("Invalid Credentials");
       } else {
         errorToast("Oops! Something went wrong. Please try again later.");
       }

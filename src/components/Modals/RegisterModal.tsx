@@ -4,21 +4,16 @@ import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
-import {
-  FieldValues,
-  SubmitHandler,
-  ValidationRule,
-  useForm,
-} from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useRegisterModal from "@/hooks/useRegisterModal";
 
 import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import Input from "../UI/Input";
-import { toast } from "react-hot-toast";
 import Button from "../UI/Button";
 import errorToast from "../UI/ErrorToast";
 import useLoginModal from "@/hooks/useLoginModal";
+import { StatusCodes } from "http-status-codes";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -28,6 +23,7 @@ const RegisterModal = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       name: "",
@@ -38,22 +34,18 @@ const RegisterModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    toast.loading(`Please wait, ${data.name}!`, {
-      id: "loading",
-    });
 
     try {
       const response = await axios.post(`/api/register`, data);
-      toast.dismiss("loading");
 
-      if (response.status !== 200) {
+      if (response.status !== StatusCodes.OK) {
         throw new Error("Oops! Something went wrong.");
       }
 
       registerModal.onClose();
+      reset();
     } catch (error: any) {
-      toast.dismiss("loading");
-      if (error?.response?.status === 403) {
+      if (error?.response?.status === StatusCodes.CONFLICT) {
         errorToast(
           "User already exists. Please try again with a different email."
         );
