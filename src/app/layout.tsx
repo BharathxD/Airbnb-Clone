@@ -4,6 +4,7 @@ import { Montserrat } from "next/font/google";
 import RegisterModal from "@/components/Modals/RegisterModal";
 import ToasterProvider from "../providers/ToasterProvider";
 import LoginModal from "@/components/Modals/LoginModal";
+import getCurrentUser from "./actions/getCurrentUser";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -12,18 +13,20 @@ export const metadata = {
   description: "This is an Airbnb Clone",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
+  console.log(currentUser);
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
         <ToasterProvider />
         <RegisterModal />
         <LoginModal />
-        <Navbar />
+        <Navbar currentUser={currentUser} />
         {children}
       </body>
     </html>
