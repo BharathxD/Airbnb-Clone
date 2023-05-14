@@ -25,10 +25,9 @@ const getCurrentUser = async (): Promise<SafeUser | null> => {
       ...currentUser,
       createdAt: currentUser.createdAt.toISOString(),
       updatedAt: currentUser.updatedAt.toISOString(),
-      emailVerified: currentUser.emailVerified?.toISOString() || null
+      emailVerified: currentUser.emailVerified?.toISOString() || null,
     };
   } catch (error: any) {
-    console.log(error.message);
     return null;
   }
 };

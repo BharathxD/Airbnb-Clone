@@ -14,6 +14,7 @@ import Button from "../UI/Button";
 import ErrorToast from "../UI/ErrorToast";
 import useLoginModal from "@/hooks/useLoginModal";
 import { StatusCodes } from "http-status-codes";
+import { signIn } from "next-auth/react";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -96,13 +97,17 @@ const RegisterModal = () => {
       <Button
         icon={FcGoogle}
         label="Continue with Google"
-        onClick={() => {}}
+        onClick={() => {
+          signIn("google");
+        }}
         outline
       />
       <Button
         icon={AiFillGithub}
         label="Continue with Github"
-        onClick={() => {}}
+        onClick={() => {
+          signIn("github");
+        }}
         outline
       />
       <div className="text-neutral-500 text-center mt-4 font-light">

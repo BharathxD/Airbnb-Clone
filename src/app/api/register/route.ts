@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
     const modifiedUser = omit(user, "hashedPassword");
     return NextResponse.json(modifiedUser, { status: StatusCodes.OK });
   } catch (error: any) {
-    // console.error("An error occurred:", error);
     if (error.code == "P2002") {
       return NextResponse.json("User already exists", {
         status: StatusCodes.CONFLICT,
