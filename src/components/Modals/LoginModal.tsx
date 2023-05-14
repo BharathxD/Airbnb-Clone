@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { signIn } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
@@ -91,8 +90,22 @@ const LoginModal = () => {
     <div className="flex flex-col gap-4 mt-3">
       <hr />
       <div className="flex gap-2">
-        <Button icon={FcGoogle} label="Google" onClick={() => {}} outline />
-        <Button icon={AiFillGithub} label="Github" onClick={() => {}} outline />
+        <Button
+          icon={FcGoogle}
+          label="Google"
+          onClick={() => {
+            signIn("google");
+          }}
+          outline
+        />
+        <Button
+          icon={AiFillGithub}
+          label="Github"
+          onClick={() => {
+            signIn("github");
+          }}
+          outline
+        />
       </div>
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row items-center gap-2 justify-center">
