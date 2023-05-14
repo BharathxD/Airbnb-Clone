@@ -3,6 +3,7 @@ import "./globals.css";
 import { Montserrat } from "next/font/google";
 import RegisterModal from "@/components/Modals/RegisterModal";
 import ToasterProvider from "../providers/ToasterProvider";
+import LoginModal from "@/components/Modals/LoginModal";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning={true}>
         <ToasterProvider />
         <RegisterModal />
+        <LoginModal />
         <Navbar />
         {children}
       </body>

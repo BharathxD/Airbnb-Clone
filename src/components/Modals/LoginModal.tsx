@@ -10,7 +10,7 @@ import {
   ValidationRule,
   useForm,
 } from "react-hook-form";
-import useRegisterModal from "@/hooks/useRegisterModal";
+import useLoginModal from "@/hooks/useLoginModal";
 
 import Modal from "./Modal";
 import Heading from "../UI/Heading";
@@ -18,11 +18,11 @@ import Input from "../UI/Input";
 import { toast } from "react-hot-toast";
 import Button from "../UI/Button";
 import errorToast from "../UI/ErrorToast";
-import useLoginModal from "@/hooks/useLoginModal";
+import useRegisterModal from "@/hooks/useRegisterModal";
 
-const RegisterModal = () => {
-  const registerModal = useRegisterModal();
+const LoginModal = () => {
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     register,
@@ -30,7 +30,6 @@ const RegisterModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -43,20 +42,18 @@ const RegisterModal = () => {
     });
 
     try {
-      const response = await axios.post(`/api/register`, data);
+      const response = await axios.post(`/api/login`, data);
       toast.dismiss("loading");
 
       if (response.status !== 200) {
         throw new Error("Oops! Something went wrong.");
       }
 
-      registerModal.onClose();
+      loginModal.onClose();
     } catch (error: any) {
       toast.dismiss("loading");
-      if (error?.response?.status === 403) {
-        errorToast(
-          "User already exists. Please try again with a different email."
-        );
+      if (error?.response?.status === 404) {
+        errorToast("User doesn't exist.");
       } else {
         errorToast("Oops! Something went wrong. Please try again later.");
       }
@@ -67,19 +64,10 @@ const RegisterModal = () => {
 
   const body = (
     <div className="flex flex-col gap-5">
-      <Heading title="Welcome to Airbnb" subtitle="Create an account" center />
       <Input
         id="email"
         label="Email"
         type="email"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="name"
-        label="Name"
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -101,29 +89,21 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
       <hr />
-      <Button
-        icon={FcGoogle}
-        label="Continue with Google"
-        onClick={() => {}}
-        outline
-      />
-      <Button
-        icon={AiFillGithub}
-        label="Continue with Github"
-        onClick={() => {}}
-        outline
-      />
+      <div className="flex gap-2">
+        <Button icon={FcGoogle} label="Google" onClick={() => {}} outline />
+        <Button icon={AiFillGithub} label="Github" onClick={() => {}} outline />
+      </div>
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row items-center gap-2 justify-center">
-          <div>Already have an account?</div>
+          <div>Don&apos;t have an account?</div>
           <div
             className="text-neutral-600 cursor-pointer hover:underline font-medium"
             onClick={() => {
-              registerModal.onClose();
-              loginModal.onOpen();
+              loginModal.onClose();
+              registerModal.onOpen();
             }}
           >
-            Log In
+            Sign Up
           </div>
         </div>
       </div>
@@ -133,10 +113,10 @@ const RegisterModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="Register"
-      actionLabel="Continue"
-      onClose={registerModal.onClose}
+      isOpen={loginModal.isOpen}
+      title="Login"
+      actionLabel="Login"
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={body}
       footer={footerContent}
@@ -144,4 +124,4 @@ const RegisterModal = () => {
   );
 };
 
-export default RegisterModal;
+export default LoginModal;
