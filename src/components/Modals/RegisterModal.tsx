@@ -11,7 +11,7 @@ import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
-import errorToast from "../UI/ErrorToast";
+import ErrorToast from "../UI/ErrorToast";
 import useLoginModal from "@/hooks/useLoginModal";
 import { StatusCodes } from "http-status-codes";
 
@@ -46,11 +46,11 @@ const RegisterModal = () => {
       reset();
     } catch (error: any) {
       if (error?.response?.status === StatusCodes.CONFLICT) {
-        errorToast(
+        ErrorToast(
           "User already exists. Please try again with a different email."
         );
       } else {
-        errorToast("Oops! Something went wrong. Please try again later.");
+        ErrorToast("Oops! Something went wrong. Please try again later.");
       }
     } finally {
       setIsLoading(false);

@@ -2,9 +2,9 @@
 
 import { toast } from "react-hot-toast";
 
-const errorToast = (message: string, id?: string) => {
+const ErrorToast = (message: string, id?: string) => {
   return toast.error(message, {
-    duration: 10000,
+    duration: 5000,
     id,
     style: {
       minWidth: "max-content",
@@ -12,4 +12,4 @@ const errorToast = (message: string, id?: string) => {
   });
 };
 
-export default errorToast;
+export default ErrorToast;

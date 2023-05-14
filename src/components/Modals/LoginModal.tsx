@@ -1,27 +1,25 @@
 "use client";
 
 import axios from "axios";
+import { signIn } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
-import {
-  FieldValues,
-  SubmitHandler,
-  ValidationRule,
-  useForm,
-} from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useLoginModal from "@/hooks/useLoginModal";
 
 import Modal from "./Modal";
-import Heading from "../UI/Heading";
 import Input from "../UI/Input";
-import { toast } from "react-hot-toast";
 import Button from "../UI/Button";
-import errorToast from "../UI/ErrorToast";
+import ErrorToast from "../UI/ErrorToast";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { StatusCodes } from "http-status-codes";
+import Heading from "../UI/Heading";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const LoginModal = () => {
+  const router = useRouter();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,6 +27,7 @@ const LoginModal = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       email: "",
@@ -38,21 +37,26 @@ const LoginModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-
     try {
-      const response = await axios.post(`/api/login`, data);
+      const response = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
 
-      if (response.status !== StatusCodes.OK) {
-        throw new Error("Oops! Something went wrong.");
+      if (response?.ok) {
+        toast.success("Logged In");
+        loginModal.onClose();
+        router.refresh();
+        return reset();
       }
 
-      loginModal.onClose();
+      if (response?.status === StatusCodes.UNAUTHORIZED) {
+        return ErrorToast(response?.error!);
+      }
+
+      throw new Error("Oops! Something went wrong. Please try again later.");
     } catch (error: any) {
-      if (error?.response?.status === StatusCodes.UNAUTHORIZED) {
-        errorToast("Invalid Credentials");
-      } else {
-        errorToast("Oops! Something went wrong. Please try again later.");
-      }
+      ErrorToast(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -60,6 +64,7 @@ const LoginModal = () => {
 
   const body = (
     <div className="flex flex-col gap-5">
+      <Heading title="Welcome Back!" subtitle="Login to your account" center />
       <Input
         id="email"
         label="Email"
