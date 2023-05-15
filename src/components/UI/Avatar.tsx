@@ -10,11 +10,11 @@ interface AvatarProps {
 const Avatar: FC<AvatarProps> = ({ src }) => {
   return (
     <Image
-      className="rounded-full"
+      className={`${src || `opacity-60`} rounded-full`}
       height={30}
       width={30}
       alt="Avatar"
-      src={src || "/images/placeholder.png"}
+      src={src || "/images/placeholder.svg"}
     />
   );
 };
