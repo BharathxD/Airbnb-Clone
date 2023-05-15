@@ -80,12 +80,8 @@ const Modal: FC<ModalProps> = ({
           <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             {/* {HEADER} */}
             <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1px]">
-              <button className="p-1 border-0 hover:opacity-70 transition absolute right-6">
-                <IoMdClose
-                  size={25}
-                  className="bg-rose-500 rounded-lg text-white p-1 hover:shadow-md"
-                  onClick={handleClose}
-                />
+              <button className="p-1 border-0 hover:opacity-70 transition absolute left-6">
+                <IoMdClose size={30} className="p-1" onClick={handleClose} />
               </button>
               <div className="text-lg font-semibold">{title}</div>
             </div>

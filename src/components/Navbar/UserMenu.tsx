@@ -8,6 +8,7 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import { signOut } from "next-auth/react";
 import { SafeUser } from "@/types";
+import Language from "./Language";
 
 interface UserMenuProps {
   currentUser: SafeUser | null | undefined;
@@ -20,15 +21,22 @@ const UserMenu: FC<UserMenuProps> = ({ currentUser }) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((prevState) => !prevState);
   }, []);
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    // TODO: Open Rent Modal
+  }, [currentUser, loginModal]);
   return (
     <div className="relative">
-      <div className="flex flex-row items-center gap-3">
+      <div className="flex flex-row items-center gap-2">
         <div
           onClick={() => {}}
-          className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
+          className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer mr-[-10px]"
         >
           Airbnb your home
         </div>
+        <Language />
         <div
           onClick={() => {
             toggleOpen();
@@ -63,16 +71,20 @@ const UserMenu: FC<UserMenuProps> = ({ currentUser }) => {
               <Fragment>
                 <MenuItem
                   onClick={() => {
+                    registerModal.onOpen();
+                  }}
+                  label="Sign Up"
+                  bold
+                />
+                <MenuItem
+                  onClick={() => {
                     loginModal.onOpen();
                   }}
                   label="Login"
                 />
-                <MenuItem
-                  onClick={() => {
-                    registerModal.onOpen();
-                  }}
-                  label="Sign Up"
-                />
+                <hr />
+                <MenuItem onClick={() => {}} label="Airbnb your home" />
+                <MenuItem onClick={() => {}} label="Help" />
               </Fragment>
             )}
           </div>

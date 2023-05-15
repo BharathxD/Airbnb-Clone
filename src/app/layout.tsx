@@ -1,13 +1,13 @@
 import Navbar from "../components/Navbar/Navbar";
 import "./globals.css";
-import { Montserrat } from "next/font/google";
+import { Nunito } from "next/font/google";
 import RegisterModal from "@/components/Modals/RegisterModal";
 import ToasterProvider from "../providers/ToasterProvider";
 import LoginModal from "@/components/Modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
 import { SafeUser } from "@/types";
 
-const inter = Montserrat({ subsets: ["latin"] });
+const inter = Nunito({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Airbnb",
