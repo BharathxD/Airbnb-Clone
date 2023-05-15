@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useLoginModal from "@/hooks/useLoginModal";
 
@@ -33,6 +33,11 @@ const LoginModal = () => {
       password: "",
     },
   });
+
+  const toggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [registerModal, loginModal]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -112,10 +117,7 @@ const LoginModal = () => {
           <div>Don&apos;t have an account?</div>
           <div
             className="text-neutral-600 cursor-pointer hover:underline font-medium"
-            onClick={() => {
-              loginModal.onClose();
-              registerModal.onOpen();
-            }}
+            onClick={toggle}
           >
             Sign Up
           </div>

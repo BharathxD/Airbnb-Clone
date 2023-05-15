@@ -2,9 +2,6 @@
 
 import { FC } from "react";
 import Container from "../UI/Container";
-import { TbBeach } from "react-icons/tb";
-import { GiWindmill } from "react-icons/Gi";
-import { MdOutlineVilla } from "react-icons/md";
 import CategoryBox from "../UI/CategoryBox";
 import { usePathname, useSearchParams } from "next/navigation";
 import { categories } from "@/constants/Categories";
@@ -18,6 +15,7 @@ const Categories: FC<CategoriesProps> = () => {
   const isMainPage = pathname === "/";
 
   if (!isMainPage) {
+    // If it's not mainpage return null
     return null;
   }
 

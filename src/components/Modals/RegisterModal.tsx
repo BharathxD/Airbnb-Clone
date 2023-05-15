@@ -3,7 +3,7 @@
 import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useRegisterModal from "@/hooks/useRegisterModal";
 
@@ -32,6 +32,11 @@ const RegisterModal = () => {
       password: "",
     },
   });
+
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [registerModal, loginModal]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -115,10 +120,7 @@ const RegisterModal = () => {
           <div>Already have an account?</div>
           <div
             className="text-neutral-600 cursor-pointer hover:underline font-medium"
-            onClick={() => {
-              registerModal.onClose();
-              loginModal.onOpen();
-            }}
+            onClick={toggle}
           >
             Log In
           </div>
