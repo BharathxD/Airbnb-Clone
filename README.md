@@ -28,16 +28,16 @@ To learn more about the route handler initialization in NextAuth, you can refer 
 
    - Application name: Choose a name for your application.
    - `Homepage URL`: `http://localhost:3000`.
-   - `Authorization Callback URL`: `http://localhost:3000/api/auth.callback/google`.
+   - `Authorization Callback URL`: `http://localhost:3000/api/auth/callback/google`.
    - Click on `Register application` to create your Discord OAuth app.
 
-4. Once the app is created, you will see the "Client ID" and "Client Secret" under the app's settings. These are your Discord OAuth Client and Secret Access Keys, respectively.
+4. Once the app is created, you will see the `Client ID` and `Client Secret` under the app's settings. These are your Discord OAuth Client and Secret Access Keys, respectively.
 
 ## To generate Google OAuth Client and Secret Access Keys, follow these steps
 
 1. Navigate to the Google Cloud Console Credentials page.
 
-2. Click on "Create credentials" and select `OAuth Client ID`.
+2. Click on `Create credentials` and select `OAuth Client ID`.
 
 3. Choose `Web application` as the application type.
 
