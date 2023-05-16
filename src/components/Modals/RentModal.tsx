@@ -43,6 +43,17 @@ const RentModal = () => {
     },
   });
 
+  const category = watch("category");
+
+  const setCustomValue = (id: string, value: any) => {
+    // setValue does sets the value, but it doesn't re-render the page
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
+
   const onPrev = () => {
     setStep((value) => value - 1);
   };
@@ -72,13 +83,13 @@ const RentModal = () => {
         subtitle="Pick a category"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] p-3 overflow-y-auto">
-        {categories.map((category) => (
-          <div key={category.label} className="col-span-1">
+        {categories.map((item) => (
+          <div key={item.label} className="col-span-1">
             <CategoryInput
-              onClick={() => {}}
-              selected={false}
-              label={category.label}
-              Icon={category.icon}
+              onClick={(category) => setCustomValue("category", category)}
+              selected={category === item.label}
+              label={item.label}
+              Icon={item.icon}
             />
           </div>
         ))}
