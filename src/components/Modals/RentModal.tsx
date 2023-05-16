@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import useRentModal from "@/hooks/useRentModal";
 import Modal from "./Modal";
+import Heading from "../UI/Heading";
+import { categories } from "@/constants/Categories";
 
 const enum STEPS {
   CATEGORY = 1,
@@ -40,10 +42,27 @@ const RentModal = () => {
     return "Back";
   }, [step]);
 
+  let body = (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Which of these best describes your place?"
+        subtitle="Pick a category"
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
+        {categories.map((category) => (
+          <div key={category.label} className="col-span-1">
+            {category.label}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <Modal
       title="Airbnb your home!"
       isOpen={rentModal.isOpen}
+      body={body}
       onClose={rentModal.onClose}
       onSubmit={rentModal.onClose}
       actionLabel={actionLabel}
