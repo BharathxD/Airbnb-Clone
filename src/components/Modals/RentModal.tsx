@@ -97,13 +97,17 @@ const RentModal = () => {
     </div>
   );
 
+  if (step === STEPS.LOCATION) {
+    body = <div>Location Step</div>;
+  }
+
   return (
     <Modal
       title="Airbnb your home!"
       isOpen={rentModal.isOpen}
       body={body}
       onClose={rentModal.onClose}
-      onSubmit={rentModal.onClose}
+      onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? onPrev : undefined}
