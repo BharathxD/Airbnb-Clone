@@ -8,7 +8,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useLoginModal from "@/hooks/useLoginModal";
 
 import Modal from "./Modal";
-import Input from "../UI/Input";
+import Input from "../Inputs/Input";
 import Button from "../UI/Button";
 import ErrorToast from "../UI/ErrorToast";
 import useRegisterModal from "@/hooks/useRegisterModal";

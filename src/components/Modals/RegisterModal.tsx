@@ -9,7 +9,7 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 
 import Modal from "./Modal";
 import Heading from "../UI/Heading";
-import Input from "../UI/Input";
+import Input from "../Inputs/Input";
 import Button from "../UI/Button";
 import ErrorToast from "../UI/ErrorToast";
 import useLoginModal from "@/hooks/useLoginModal";

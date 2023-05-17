@@ -5,8 +5,9 @@ import useRentModal from "@/hooks/useRentModal";
 import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import { categories } from "@/constants/Categories";
-import CategoryInput from "../UI/CategoryInput";
-import { FieldValue, FieldValues, useForm } from "react-hook-form";
+import CategoryInput from "../Inputs/CategoryInput";
+import { FieldValues, useForm } from "react-hook-form";
+import CountrySelect from "../Inputs/CountrySelect";
 
 const enum STEPS {
   CATEGORY = 1,
@@ -104,6 +105,7 @@ const RentModal = () => {
           title="Where is your place located?"
           subtitle="Help guests find you!"
         />
+        <CountrySelect />
       </div>
     );
   }
