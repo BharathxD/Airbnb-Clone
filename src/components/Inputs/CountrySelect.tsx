@@ -1,12 +1,33 @@
+import useCountries from "@/hooks/useCountry";
 import { FC } from "react";
-import select from "react-select";
+import Select from "react-select";
 
-interface CountrySelectProps {}
+export interface CountrySelectValue {
+  flag: string;
+  label: string;
+  latlng: number[];
+  region: string;
+  value: string;
+}
 
-const CountrySelect: FC<CountrySelectProps> = () => {
-  return <div>
-    
-  </div>;
+interface CountrySelectProps {
+  value?: CountrySelectValue;
+  onChange: (value: CountrySelectValue) => void;
+}
+
+const CountrySelect: FC<CountrySelectProps> = ({ value, onChange }) => {
+  const { getAll } = useCountries();
+  return (
+    <div>
+      <Select
+        placeholder="Anywhere"
+        options={getAll()}
+        className="bg-red-500"
+        onChange={(value) => console.log(value)}
+        isClearable
+      />
+    </div>
+  );
 };
 
 export default CountrySelect;
