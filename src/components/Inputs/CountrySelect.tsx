@@ -1,3 +1,5 @@
+"use client";
+
 import useCountries from "@/hooks/useCountry";
 import { FC } from "react";
 import Select from "react-select";
@@ -21,6 +23,7 @@ const CountrySelect: FC<CountrySelectProps> = ({ value, onChange }) => {
     <div>
       <Select
         placeholder="Anywhere"
+        value={value}
         options={getAll()}
         onChange={(value) => onChange(value as unknown as CountrySelectValue)}
         formatOptionLabel={(option: any) => (
