@@ -98,7 +98,14 @@ const RentModal = () => {
   );
 
   if (step === STEPS.LOCATION) {
-    body = <div>Location Step</div>;
+    body = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Where is your place located?"
+          subtitle="Help guests find you!"
+        />
+      </div>
+    );
   }
 
   return (
@@ -110,7 +117,7 @@ const RentModal = () => {
       onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
-      secondaryAction={step === STEPS.CATEGORY ? onPrev : undefined}
+      secondaryAction={step === STEPS.CATEGORY ? undefined : onPrev}
     />
   );
 };
