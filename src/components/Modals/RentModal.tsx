@@ -9,6 +9,7 @@ import CategoryInput from "../Inputs/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../Inputs/CountrySelect";
 import Map from "../UI/Map";
+import dynamic from "next/dynamic";
 
 const enum STEPS {
   CATEGORY = 1,
@@ -47,6 +48,16 @@ const RentModal = () => {
 
   const category = watch("category");
   const location = watch("location");
+
+  const Map = useMemo(
+    () =>
+      // Dynamically import Map component into this component every time location changes
+      dynamic(() => import("../UI/Map"), {
+        ssr: false,
+      }),
+    // eslint-disable-next-line
+    [location]
+  );
 
   const setCustomValue = (id: string, value: any) => {
     // setValue does sets the value, but it doesn't re-render the page
@@ -113,7 +124,7 @@ const RentModal = () => {
             setCustomValue("location", value);
           }}
         />
-        <Map />
+        <Map center={location?.latlng} />
       </div>
     );
   }

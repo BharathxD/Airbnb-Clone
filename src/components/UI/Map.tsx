@@ -1,4 +1,5 @@
 "use client";
+
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 
 import { FC } from "react";
@@ -29,7 +30,12 @@ const Map: FC<MapProps> = ({ center }) => {
       zoom={center ? 4 : 2}
       scrollWheelZoom={false}
       className="h-[35vh] rounded-lg"
-    ></MapContainer>
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+    </MapContainer>
   );
 };
 
