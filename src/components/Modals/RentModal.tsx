@@ -11,6 +11,7 @@ import CountrySelect from "../Inputs/CountrySelect";
 import Map from "../UI/Map";
 import dynamic from "next/dynamic";
 import Counter from "../Inputs/Counter";
+import ImageUpload from "../Inputs/ImageUpload";
 
 const enum STEPS {
   CATEGORY = 1,
@@ -164,6 +165,18 @@ const RentModal = () => {
             setCustomValue("bathroomCount", value);
           }}
         />
+      </div>
+    );
+  }
+
+  if (step === STEPS.IMAGES) {
+    body = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Add a photo of your place"
+          subtitle="Show guests what your place looks like!"
+        />
+        <ImageUpload />
       </div>
     );
   }
