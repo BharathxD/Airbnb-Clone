@@ -1,11 +1,13 @@
+"use client";
+
 import uploadToS3 from "@/utils/s3";
 import Image from "next/image";
-import { FC, FormEvent, useCallback } from "react";
-import Dropzone, { useDropzone, Accept, DropEvent } from "react-dropzone";
+import { FC, useCallback } from "react";
+import Dropzone, { Accept } from "react-dropzone";
 import { TbPhotoPlus } from "react-icons/tb";
 
 interface ImageUploadProps {
-  onChange: (value: string | undefined) => void;
+  onChange: (value: string) => void;
   value: string;
 }
 
@@ -18,10 +20,14 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
     async (acceptedFile: File[]) => {
       const file = acceptedFile[0] as File;
       const key = await uploadToS3(file);
+      if (!key) {
+        return;
+      }
       onChange(key);
     },
     [onChange]
   );
+  console.log(value);
   return (
     <div>
       <Dropzone
@@ -43,10 +49,11 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
               absolute inset-0 w-full h-full"
               >
                 <Image
-                  fill
+                  className="rounded-lg"
                   style={{ objectFit: "cover" }}
                   src={value}
                   alt="House"
+                  fill
                 />
               </div>
             )}

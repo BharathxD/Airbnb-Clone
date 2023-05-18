@@ -7,9 +7,9 @@ const uploadToS3 = async (file: File): Promise<string | undefined> => {
   const fileType = encodeURIComponent(file.type);
   try {
     const { data } = await axios.get(`/api/media?fileType=${fileType}`);
-    const { s3UploadUrl, key } = data;
+    const { s3UploadUrl, fullUrl } = data;
     await axios.put(s3UploadUrl, file);
-    return key;
+    return fullUrl;
   } catch (error: any) {
     console.error("Failed to upload file to S3:", error);
   }

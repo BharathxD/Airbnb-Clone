@@ -19,8 +19,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       ContentType: `image/${extension}`,
     };
     const s3UploadUrl = await s3.getSignedUrlPromise("putObject", s3Params);
-    const bucketUrl = `https://s3.amazonaws.com/${process.env.AWS_S3_BUCKET_NAME}`;
-    const fullUrl = `${bucketUrl}/${key}`;
+    const fullUrl = `${process.env.AWS_S3_ENDPOINT}/${key}`;
     const data: Data = { s3UploadUrl, fullUrl };
     const responseBody = JSON.stringify(data);
 
