@@ -1,5 +1,6 @@
-import { FC } from "react";
-import Dropzone, { useDropzone, Accept } from "react-dropzone";
+import uploadToS3 from "@/utils/s3";
+import { FC, FormEvent } from "react";
+import Dropzone, { useDropzone, Accept, DropEvent } from "react-dropzone";
 import { TbPhotoPlus } from "react-icons/tb";
 
 interface ImageUploadProps {}
@@ -10,9 +11,18 @@ const ImageUpload: FC<ImageUploadProps> = () => {
     "image/jpeg": [".jpg", ".jpeg"],
     "image/png": [".png"],
   };
+  const handleImageUpload = async (acceptedFile: File[]) => {
+    const file = acceptedFile[0] as File;
+    const key = await uploadToS3(file);
+    console.log(key);
+  };
   return (
     <div>
-      <Dropzone accept={acceptedFileTypes}>
+      <Dropzone
+        accept={acceptedFileTypes}
+        multiple={false}
+        onDrop={handleImageUpload}
+      >
         {({ getRootProps, getInputProps }) => (
           <div
             {...getRootProps()}
