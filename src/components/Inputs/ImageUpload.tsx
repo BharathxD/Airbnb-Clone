@@ -4,7 +4,7 @@ interface ImageUploadProps {}
 
 const ImageUpload: FC<ImageUploadProps> = () => {
   return <div>
-    
+
   </div>;
 };
 
