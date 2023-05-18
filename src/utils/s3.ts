@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const uploadToS3 = async (file: File): Promise<string | null> => {
+const uploadToS3 = async (file: File): Promise<string | undefined> => {
   if (!file || file.name === "") {
     throw new Error("Invalid file");
   }
@@ -12,7 +12,6 @@ const uploadToS3 = async (file: File): Promise<string | null> => {
     return key;
   } catch (error: any) {
     console.error("Failed to upload file to S3:", error);
-    return null;
   }
 };
 
