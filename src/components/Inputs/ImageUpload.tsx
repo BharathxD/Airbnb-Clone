@@ -103,7 +103,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
           >
             <input {...getInputProps()} />
             {renderUploadState()}
-            {
+            {value !== "" && (
               <div
                 className="absolute z-10 top-1 right-1"
                 onClick={handleRemove}
@@ -113,7 +113,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
                   size={30}
                 />
               </div>
-            }
+            )}
             {value && (
               <div className="absolute inset-0 w-full h-full">
                 <Image

@@ -9,7 +9,7 @@ type Data = {
   fullUrl: string;
 };
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest, _: NextResponse) {
   try {
     const extension = req.url?.split("%2F")[1];
     const key = `picture_${randomUUID()}.${extension}`;

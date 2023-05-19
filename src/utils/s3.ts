@@ -25,10 +25,10 @@ export const uploadToS3 = async (file: File): Promise<string | undefined> => {
   }
 };
 
-export const deleteFromS3 = async (imageId: string): Promise<boolean> => {
-  const image = encodeURIComponent(imageId);
+export const deleteFromS3 = async (fullImageUrl: string): Promise<boolean> => {
+  const image = encodeURIComponent(fullImageUrl);
   try {
-    const response = await axios.post(`/api/media?imageId=${image}`);
+    const response = await axios.post(`/api/media?key=${image}`);
     if (response.status !== StatusCodes.OK) {
       throw new Error("Something went wrong, the object can't be deleted");
     }
