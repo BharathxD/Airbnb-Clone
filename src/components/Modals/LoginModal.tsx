@@ -10,7 +10,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import Modal from "./Modal";
 import Input from "../Inputs/Input";
 import Button from "../UI/Button";
-import ErrorToast from "../UI/ErrorToast";
+import { ErrorToast, SuccessToast } from "../UI/Toast";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { StatusCodes } from "http-status-codes";
 import Heading from "../UI/Heading";
@@ -48,7 +48,7 @@ const LoginModal = () => {
       });
 
       if (response?.ok) {
-        toast.success("Logged In");
+        SuccessToast("Logged In");
         loginModal.onClose();
         router.refresh();
         return reset();

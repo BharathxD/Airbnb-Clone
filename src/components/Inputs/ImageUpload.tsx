@@ -8,6 +8,7 @@ import Image from "next/image";
 import { uploadToS3, deleteFromS3 } from "@/utils/s3";
 import { IoMdRemoveCircle } from "react-icons/io";
 import { toast } from "react-hot-toast";
+import { ErrorToast, SuccessToast } from "../UI/Toast";
 
 interface ImageUploadProps {
   onChange: (value: string) => void;
@@ -32,12 +33,15 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
         setIsLoading(true);
         const key = await uploadToS3(file);
 
-        if (key) {
-          onChange(key);
+        if (!key) {
+          throw new Error("Something went wrong");
         }
 
+        onChange(key);
         setIsLoading(false);
-      } catch (error) {
+      } catch (error: any) {
+        console.log(`Error uploading the image: ${error.message}`);
+        ErrorToast("Something went wrong, please try again later");
         setIsLoading(false);
       }
     },
@@ -50,12 +54,12 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
         const isDeleted = await deleteFromS3(value);
         if (isDeleted) {
           onChange("");
-          toast.success("Deleted the picture");
+          SuccessToast("Deleted the picture");
         }
       }
     } catch (error: any) {
       console.log(error.message);
-      toast.success("Cannot delete the picture");
+      ErrorToast("Cannot delete the picture");
     }
   };
 
