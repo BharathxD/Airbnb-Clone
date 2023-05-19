@@ -16,7 +16,7 @@ interface ModalProps {
   onClose: () => void;
   onSubmit: () => void;
   title?: string;
-  body?: ReactElement;
+  body?: ReactElement | null;
   footer?: ReactElement;
   actionLabel: string;
   disabled?: boolean;

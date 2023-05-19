@@ -11,7 +11,7 @@ import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import Input from "../Inputs/Input";
 import Button from "../UI/Button";
-import ErrorToast from "../UI/Toast";
+import { ErrorToast } from "../UI/Toast";
 import useLoginModal from "@/hooks/useLoginModal";
 import { StatusCodes } from "http-status-codes";
 import { signIn } from "next-auth/react";

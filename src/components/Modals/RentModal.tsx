@@ -26,6 +26,18 @@ const enum STEPS {
   PRICE = 6,
 }
 
+const defaultFormValues = {
+  category: "",
+  location: null,
+  guestCount: 1,
+  roomCount: 1,
+  bathroomCount: 1,
+  imageSrc: "",
+  price: 1,
+  title: "",
+  description: "",
+};
+
 const RentModal = () => {
   const rentModal = useRentModal();
   const router = useRouter();
@@ -50,17 +62,7 @@ const RentModal = () => {
     formState: { errors },
     reset,
   } = useForm<FieldValues>({
-    defaultValues: {
-      category: "",
-      location: null,
-      guestCount: 1,
-      roomCount: 1,
-      bathroomCount: 1,
-      imageSrc: "",
-      price: 1,
-      title: "",
-      description: "",
-    },
+    defaultValues: defaultFormValues,
   });
 
   const category = watch("category");
@@ -122,31 +124,52 @@ const RentModal = () => {
     return "Back";
   }, [step]);
 
-  // CATEGORIES
-  let body = (
-    <div className="flex flex-col gap-8">
-      <Heading
-        title="Which of these best describes your place?"
-        subtitle="Pick a category"
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] p-3 overflow-y-auto">
-        {categories.map((item) => (
-          <div key={item.label} className="col-span-1">
-            <CategoryInput
-              onClick={(category) => setCustomValue("category", category)}
-              selected={category === item.label}
-              label={item.label}
-              Icon={item.icon}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  const getBodyComponent = (step: STEPS) => {
+    switch (step) {
+      case STEPS.CATEGORY:
+        return renderCategoryStep();
+      case STEPS.LOCATION:
+        return renderLocationStep();
+      case STEPS.INFO:
+        return renderInfoStep();
+      case STEPS.IMAGES:
+        return renderImagesStep();
+      case STEPS.DESCRIPTION:
+        return renderDescriptionStep();
+      case STEPS.PRICE:
+        return renderPriceStep();
+      default:
+        return null;
+    }
+  };
 
-  // LOCATION
-  if (step === STEPS.LOCATION) {
-    body = (
+  const renderCategoryStep = () => {
+    // CATEGORIES
+    return (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Which of these best describes your place?"
+          subtitle="Pick a category"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] p-3 overflow-y-auto">
+          {categories.map((item) => (
+            <div key={item.label} className="col-span-1">
+              <CategoryInput
+                onClick={(category) => setCustomValue("category", category)}
+                selected={category === item.label}
+                label={item.label}
+                Icon={item.icon}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderLocationStep = () => {
+    // LOCATION
+    return (
       <div className="flex flex-col gap-8">
         <Heading
           title="Where is your place located?"
@@ -161,11 +184,11 @@ const RentModal = () => {
         <Map center={location?.latlng} />
       </div>
     );
-  }
+  };
 
-  // INFO
-  if (step === STEPS.INFO) {
-    body = (
+  const renderInfoStep = () => {
+    // INFO
+    return (
       <div className="flex flex-col gap-9">
         <Heading
           title="Share some basics about your place"
@@ -197,11 +220,11 @@ const RentModal = () => {
         />
       </div>
     );
-  }
+  };
 
-  // IMAGE
-  if (step === STEPS.IMAGES) {
-    body = (
+  const renderImagesStep = () => {
+    // IMAGE
+    return (
       <div className="flex flex-col gap-8">
         <Heading
           title="Add a photo of your place"
@@ -213,11 +236,11 @@ const RentModal = () => {
         />
       </div>
     );
-  }
+  };
 
-  // DESCRIPTION
-  if (step === STEPS.DESCRIPTION) {
-    body = (
+  const renderDescriptionStep = () => {
+    // DESCRIPTION
+    return (
       <div className="flex flex-col gap-8">
         <Heading
           title="How would you describe your place?"
@@ -242,11 +265,11 @@ const RentModal = () => {
         />
       </div>
     );
-  }
+  };
 
-  // PRICE
-  if (step === STEPS.PRICE) {
-    body = (
+  const renderPriceStep = () => {
+    // PRICE
+    return (
       <div className="flex flex-col gap-8">
         <Heading
           title="Now, set your price"
@@ -263,13 +286,13 @@ const RentModal = () => {
         />
       </div>
     );
-  }
+  };
 
   return (
     <Modal
       title="Airbnb your home!"
       isOpen={rentModal.isOpen}
-      body={body}
+      body={getBodyComponent(step)}
       onClose={rentModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
