@@ -102,7 +102,6 @@ const RentModal = () => {
     if (step !== STEPS.PRICE) {
       return onNext();
     }
-    console.log("TRIGGERED");
     mutate(values);
     router.refresh();
     reset();
