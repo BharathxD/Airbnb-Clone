@@ -1,6 +1,16 @@
 import axios from "axios";
+import { StatusCodes } from "http-status-codes";
 
-const uploadToS3 = async (file: File): Promise<string | undefined> => {
+/**
+ * This is a TypeScript function that uploads a file to an S3 bucket and returns the URL of the
+ * uploaded file.
+ * @param {File} file - The `file` parameter is of type `File`, which is a built-in JavaScript object
+ * representing a file uploaded by the user through an HTML input element of type "file". It contains
+ * information about the file such as its name, type, and size, as well as the actual file data.
+ * @returns a Promise that resolves to a string representing the full URL of the uploaded file on S3,
+ * or undefined if the upload fails.
+ */
+export const uploadToS3 = async (file: File): Promise<string | undefined> => {
   if (!file || file.name === "") {
     throw new Error("Invalid file");
   }
@@ -15,4 +25,16 @@ const uploadToS3 = async (file: File): Promise<string | undefined> => {
   }
 };
 
-export default uploadToS3;
+export const deleteFromS3 = async (imageId: string): Promise<boolean> => {
+  const image = encodeURIComponent(imageId);
+  try {
+    const response = await axios.post(`/api/media?imageId=${image}`);
+    if (response.status !== StatusCodes.OK) {
+      throw new Error("Something went wrong, the object can't be deleted");
+    }
+    return true;
+  } catch (error: any) {
+    console.error("Failed to upload file to S3:", error);
+    return false;
+  }
+};

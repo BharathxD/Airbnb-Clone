@@ -5,7 +5,9 @@ import { IoCloudDone } from "react-icons/io5";
 import { TbCloudUpload, TbPhotoPlus } from "react-icons/tb";
 import Dropzone, { Accept, FileRejection } from "react-dropzone";
 import Image from "next/image";
-import uploadToS3 from "@/utils/s3";
+import { uploadToS3, deleteFromS3 } from "@/utils/s3";
+import { IoMdRemoveCircle } from "react-icons/io";
+import { toast } from "react-hot-toast";
 
 interface ImageUploadProps {
   onChange: (value: string) => void;
@@ -41,6 +43,21 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
     },
     [onChange]
   );
+
+  const handleRemove = async () => {
+    try {
+      if (value) {
+        const isDeleted = await deleteFromS3(value);
+        if (isDeleted) {
+          onChange("");
+          toast.success("Deleted the picture");
+        }
+      }
+    } catch (error: any) {
+      console.log(error.message);
+      toast.success("Cannot delete the picture");
+    }
+  };
 
   const renderUploadState = () => {
     if (isLoading) {
@@ -80,12 +97,23 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
         {({ getRootProps, getInputProps }) => (
           <div
             {...getRootProps()}
-            className={`relative cursor-pointer transition border-dashed border-2 p-20 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 rounded-lg ${
+            className={`relative transition border-dashed border-2 p-20 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 rounded-lg ${
               isLoading && "animate-pulse"
-            } ${value !== "" && "hover:opacity-70"}`}
+            } ${value === "" && "hover:opacity-70 cursor-pointer"}`}
           >
             <input {...getInputProps()} />
             {renderUploadState()}
+            {
+              <div
+                className="absolute z-10 top-1 right-1"
+                onClick={handleRemove}
+              >
+                <IoMdRemoveCircle
+                  className="text-rose-500 cursor-pointer hover:text-rose-400"
+                  size={30}
+                />
+              </div>
+            }
             {value && (
               <div className="absolute inset-0 w-full h-full">
                 <Image

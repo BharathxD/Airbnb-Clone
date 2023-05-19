@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import s3 from "../../../aws/s3/s3";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
+import { DeleteObjectRequest } from "aws-sdk/clients/s3";
 
 type Data = {
   s3UploadUrl: string;
@@ -36,5 +37,24 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return new NextResponse("Failed to generate signed URL", {
       status: StatusCodes.INTERNAL_SERVER_ERROR,
     });
+  }
+}
+
+export async function POST(req: NextRequest, res: NextResponse) {
+  try {
+    const key = req.url?.split("com%2F")[1];
+    // Delete the object
+    const BucketParams = {
+      Bucket: process.env.AWS_S3_BUCKET_NAME || "",
+      Key: key,
+    } satisfies DeleteObjectRequest;
+    s3.deleteObject(BucketParams, function (err, data) {
+      if (err) console.log(err);
+    });
+    return new NextResponse("Ok", {
+      status: StatusCodes.OK,
+    });
+  } catch (error: any) {
+    console.log(`API Error: ${error.message}`);
   }
 }
