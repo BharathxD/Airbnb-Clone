@@ -43,7 +43,6 @@ export async function GET(req: NextRequest, _: NextResponse) {
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const key = req.url?.split("com%2F")[1];
-    // Delete the object
     const BucketParams = {
       Bucket: process.env.AWS_S3_BUCKET_NAME || "",
       Key: key,

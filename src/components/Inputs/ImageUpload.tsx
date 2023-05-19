@@ -91,48 +91,43 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
   };
 
   return (
-    <div>
-      <Dropzone
-        accept={acceptedFileTypes}
-        multiple={false}
-        onDrop={handleImageUpload}
-        disabled={value !== ""}
-      >
-        {({ getRootProps, getInputProps }) => (
-          <div
-            {...getRootProps()}
-            className={`relative transition border-dashed border-2 p-20 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 rounded-lg ${
-              isLoading && "animate-pulse"
-            } ${value === "" && "hover:opacity-70 cursor-pointer"}`}
-          >
-            <input {...getInputProps()} />
-            {renderUploadState()}
-            {value !== "" && (
-              <div
-                className="absolute z-10 top-1 right-1"
-                onClick={handleRemove}
-              >
-                <IoMdRemoveCircle
-                  className="text-rose-500 cursor-pointer hover:text-rose-400"
-                  size={30}
-                />
-              </div>
-            )}
-            {value && (
-              <div className="absolute inset-0 w-full h-full">
-                <Image
-                  className="rounded-lg"
-                  style={{ objectFit: "cover" }}
-                  src={value}
-                  alt="House"
-                  fill
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </Dropzone>
-    </div>
+    <Dropzone
+      accept={acceptedFileTypes}
+      multiple={false}
+      onDrop={handleImageUpload}
+      disabled={value !== ""}
+    >
+      {({ getRootProps, getInputProps }) => (
+        <div
+          {...getRootProps()}
+          className={`relative transition border-dashed border-2 p-20 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 rounded-lg ${
+            isLoading && "animate-pulse"
+          } ${value === "" && "hover:opacity-70 cursor-pointer"}`}
+        >
+          <input {...getInputProps()} required />
+          {renderUploadState()}
+          {value !== "" && (
+            <div className="absolute z-10 top-1 right-1" onClick={handleRemove}>
+              <IoMdRemoveCircle
+                className="text-rose-500 cursor-pointer hover:text-rose-400"
+                size={30}
+              />
+            </div>
+          )}
+          {value && (
+            <div className="absolute inset-0 w-full h-full">
+              <Image
+                className="rounded-lg"
+                style={{ objectFit: "cover" }}
+                src={value}
+                alt="House"
+                fill
+              />
+            </div>
+          )}
+        </div>
+      )}
+    </Dropzone>
   );
 };
 

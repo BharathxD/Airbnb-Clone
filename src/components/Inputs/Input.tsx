@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, Fragment } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
@@ -45,6 +47,7 @@ const Input: FC<InputProps> = ({
         ${errors[id] ? `border-rose-500` : `border-neutral-300`}
         ${errors[id] ? `focus:border-rose-500` : `focus:border-black`}
         `}
+          required={required}
         />
         <label
           className={`absolute text-md duration-150 transform -translate-y-3 top-5 z-10 origin-[0] ${
