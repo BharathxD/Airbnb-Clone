@@ -6,13 +6,17 @@ import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import { categories } from "@/constants/Categories";
 import CategoryInput from "../Inputs/CategoryInput";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import CountrySelect from "../Inputs/CountrySelect";
 import Map from "../UI/Map";
 import dynamic from "next/dynamic";
 import Counter from "../Inputs/Counter";
 import ImageUpload from "../Inputs/ImageUpload";
 import Input from "../Inputs/Input";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const enum STEPS {
   CATEGORY = 1,
@@ -20,14 +24,24 @@ const enum STEPS {
   INFO = 3,
   IMAGES = 4,
   DESCRIPTION = 5,
-  PRICE = 5,
+  PRICE = 6,
 }
 
 const RentModal = () => {
   const rentModal = useRentModal();
+  const router = useRouter();
 
-  const [step, setStep] = useState(STEPS.CATEGORY);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [step, setStep] = useState<number>(STEPS.CATEGORY);
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (data: FieldValues) => {
+      await axios.post("/api/listings", data);
+      toast.success("List Created!");
+    },
+    onError: () => {
+      toast.error("List cannot be created, please try again later");
+    },
+  });
 
   const {
     register,
@@ -84,6 +98,18 @@ const RentModal = () => {
     setStep((value) => value + 1);
   };
 
+  const onSubmit: SubmitHandler<FieldValues> = (values: FieldValues) => {
+    if (step !== STEPS.PRICE) {
+      return onNext();
+    }
+    console.log("TRIGGERED");
+    mutate(values);
+    router.refresh();
+    reset();
+    setStep(STEPS.CATEGORY);
+    rentModal.onClose();
+  };
+
   const actionLabel = useMemo(() => {
     if (step === STEPS.PRICE) {
       return "Create";
@@ -98,6 +124,7 @@ const RentModal = () => {
     return "Back";
   }, [step]);
 
+  // CATEGORIES
   let body = (
     <div className="flex flex-col gap-8">
       <Heading
@@ -119,6 +146,7 @@ const RentModal = () => {
     </div>
   );
 
+  // LOCATION
   if (step === STEPS.LOCATION) {
     body = (
       <div className="flex flex-col gap-8">
@@ -137,6 +165,7 @@ const RentModal = () => {
     );
   }
 
+  // INFO
   if (step === STEPS.INFO) {
     body = (
       <div className="flex flex-col gap-9">
@@ -172,6 +201,7 @@ const RentModal = () => {
     );
   }
 
+  // IMAGE
   if (step === STEPS.IMAGES) {
     body = (
       <div className="flex flex-col gap-8">
@@ -187,6 +217,7 @@ const RentModal = () => {
     );
   }
 
+  // DESCRIPTION
   if (step === STEPS.DESCRIPTION) {
     body = (
       <div className="flex flex-col gap-8">
@@ -215,6 +246,7 @@ const RentModal = () => {
     );
   }
 
+  // PRICE
   if (step === STEPS.PRICE) {
     body = (
       <div className="flex flex-col gap-8">
@@ -241,7 +273,7 @@ const RentModal = () => {
       isOpen={rentModal.isOpen}
       body={body}
       onClose={rentModal.onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onPrev}

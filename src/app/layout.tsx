@@ -6,6 +6,7 @@ import ToasterProvider from "../providers/ToasterProvider";
 import LoginModal from "@/components/Modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
 import RentModal from "@/components/Modals/RentModal";
+import RtkProvider from "@/providers/RtkProvider";
 
 const inter = Nunito({ subsets: ["latin"] });
 
@@ -23,12 +24,14 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <ToasterProvider />
-        <RegisterModal />
-        <LoginModal />
-        <RentModal />
-        <Navbar currentUser={currentUser} />
-        {children}
+        <RtkProvider>
+          <ToasterProvider />
+          <RegisterModal />
+          <LoginModal />
+          <RentModal />
+          <Navbar currentUser={currentUser} />
+          {children}
+        </RtkProvider>
       </body>
     </html>
   );
