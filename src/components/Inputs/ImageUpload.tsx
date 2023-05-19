@@ -52,10 +52,11 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
     try {
       if (value) {
         const isDeleted = await deleteFromS3(value);
-        if (isDeleted) {
-          onChange("");
-          SuccessToast("Deleted the picture");
+        if (!isDeleted) {
+          throw new Error("Cannot delete the picture");
         }
+        onChange("");
+        SuccessToast("Deleted the picture");
       }
     } catch (error: any) {
       console.log(error.message);
@@ -79,6 +80,17 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
           <IoCloudDone size={50} color="green" />
           <div className="font-semibold text-lg">Done!</div>
         </Fragment>
+      );
+    }
+
+    if (value !== "") {
+      return (
+        <div className="absolute z-10 top-1 right-1" onClick={handleRemove}>
+          <IoMdRemoveCircle
+            className="text-rose-500 cursor-pointer hover:text-rose-400"
+            size={30}
+          />
+        </div>
       );
     }
 
@@ -106,14 +118,6 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
         >
           <input {...getInputProps()} required />
           {renderUploadState()}
-          {value !== "" && (
-            <div className="absolute z-10 top-1 right-1" onClick={handleRemove}>
-              <IoMdRemoveCircle
-                className="text-rose-500 cursor-pointer hover:text-rose-400"
-                size={30}
-              />
-            </div>
-          )}
           {value && (
             <div className="absolute inset-0 w-full h-full">
               <Image
