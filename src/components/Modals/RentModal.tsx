@@ -8,14 +8,12 @@ import { categories } from "@/constants/Categories";
 import CategoryInput from "../Inputs/CategoryInput";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import CountrySelect from "../Inputs/CountrySelect";
-import Map from "../UI/Map";
 import dynamic from "next/dynamic";
 import Counter from "../Inputs/Counter";
 import ImageUpload from "../Inputs/ImageUpload";
 import Input from "../Inputs/Input";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { ErrorToast, SuccessToast } from "../UI/Toast";
 
@@ -32,7 +30,7 @@ const RentModal = () => {
   const rentModal = useRentModal();
   const router = useRouter();
 
-  const [step, setStep] = useState<number>(STEPS.CATEGORY);
+  const [step, setStep] = useState<STEPS>(STEPS.CATEGORY);
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: FieldValues) => {

@@ -15,7 +15,6 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 import { StatusCodes } from "http-status-codes";
 import Heading from "../UI/Heading";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
 
 const LoginModal = () => {
   const router = useRouter();
