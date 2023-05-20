@@ -4,7 +4,7 @@ import useCountries from "@/hooks/useCountry";
 import { SafeUser } from "@/types";
 import { Listing, Reservation } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 
 interface ListingsCardProps {
   data: Listing;
@@ -22,12 +22,23 @@ const ListingsCard: FC<ListingsCardProps> = ({
   onAction,
   disabled,
   actionlabel,
-  actionId,
+  actionId = "",
   currentUser,
 }) => {
   const router = useRouter();
   const { getByValue } = useCountries();
   const location = getByValue(data.locationValue);
+  const handleCancel = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      // This function is created to prevent multiple calls to the same event from propagating.
+      event.stopPropagation();
+      if (disabled) {
+        return;
+      }
+      onAction?.(actionId);
+    },
+    [disabled, onAction, actionId]
+  );
   return <div>{data.title}</div>;
 };
 
