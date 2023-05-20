@@ -25,6 +25,16 @@ export const uploadToS3 = async (file: File): Promise<string | undefined> => {
   }
 };
 
+/**
+ * This function deletes an image from an S3 bucket and returns a boolean indicating whether the
+ * deletion was successful or not.
+ * @param {string} fullImageUrl - The `fullImageUrl` parameter is a string that represents the full URL
+ * of an image stored in an S3 bucket. This function uses the AWS SDK to delete the image from the S3
+ * bucket.
+ * @returns a Promise that resolves to a boolean value. If the object is successfully deleted from S3,
+ * the Promise resolves to `true`. If there is an error while deleting the object, the Promise resolves
+ * to `false`.
+ */
 export const deleteFromS3 = async (fullImageUrl: string): Promise<boolean> => {
   const image = encodeURIComponent(fullImageUrl);
   try {
