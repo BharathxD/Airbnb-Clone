@@ -15,7 +15,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         const body = await req.json();
         const {
             category,
-            location: locationValue,
+            location,
             guestCount,
             roomCount,
             bathroomCount,
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 userId: currentUser.id,
                 price: parseInt(price, 10),
                 category,
-                locationValue,
+                locationValue: location.value,
                 guestCount,
                 roomCount,
                 bathroomCount,
