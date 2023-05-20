@@ -11,16 +11,17 @@ import { toast } from "react-hot-toast";
 import { ErrorToast, SuccessToast } from "../UI/Toast";
 
 interface ImageUploadProps {
-  onChange: (value: string) => void;
+  onImageChange: (value: string) => void;
   value: string;
 }
 
-const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
+const ImageUpload: FC<ImageUploadProps> = ({ onImageChange, value }) => {
   const acceptedFileTypes: Accept = {
     "image/jpeg": [".jpg", ".jpeg"],
     "image/png": [".png"],
   };
   const [isLoading, setIsLoading] = useState(false);
+  const isImageSelected = value !== "";
 
   const handleImageUpload = useCallback(
     async (acceptedFiles: File[], fileRejections: FileRejection[]) => {
@@ -37,7 +38,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
           throw new Error("Something went wrong");
         }
 
-        onChange(key);
+        onImageChange(key);
         setIsLoading(false);
       } catch (error: any) {
         console.log(`Error uploading the image: ${error.message}`);
@@ -45,7 +46,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
         setIsLoading(false);
       }
     },
-    [onChange]
+    [onImageChange]
   );
 
   const handleRemove = async () => {
@@ -55,7 +56,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
         if (!isDeleted) {
           throw new Error("Cannot delete the picture");
         }
-        onChange("");
+        onImageChange("");
         SuccessToast("Deleted the picture");
       }
     } catch (error: any) {
@@ -69,7 +70,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
       return (
         <Fragment>
           <TbCloudUpload size={50} />
-          <div className="font-semibold text-lg">Uploading</div>
+          <div className="font-semibold text-lg">Uploading...</div>
         </Fragment>
       );
     }
@@ -78,19 +79,8 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
       return (
         <Fragment>
           <IoCloudDone size={50} color="green" />
-          <div className="font-semibold text-lg">Done!</div>
+          <div className="font-semibold text-lg">Upload complete!</div>
         </Fragment>
-      );
-    }
-
-    if (value !== "") {
-      return (
-        <div className="absolute z-10 top-1 right-1" onClick={handleRemove}>
-          <IoMdRemoveCircle
-            className="text-rose-500 cursor-pointer hover:text-rose-400"
-            size={30}
-          />
-        </div>
       );
     }
 
@@ -107,7 +97,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
       accept={acceptedFileTypes}
       multiple={false}
       onDrop={handleImageUpload}
-      disabled={value !== ""}
+      disabled={isImageSelected || isLoading}
     >
       {({ getRootProps, getInputProps }) => (
         <div
@@ -115,9 +105,24 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
           className={`relative transition border-dashed border-2 p-20 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 rounded-lg ${
             isLoading && "animate-pulse"
           } ${value === "" && "hover:opacity-70 cursor-pointer"}`}
+          aria-disabled={isLoading}
+          aria-label={
+            isLoading ? "Uploading image" : "Drop or click to upload image"
+          }
         >
           <input {...getInputProps()} required />
           {renderUploadState()}
+          {isImageSelected && (
+            <div
+              className="absolute z-10 top-1.5 right-1.5"
+              onClick={handleRemove}
+            >
+              <IoMdRemoveCircle
+                className="text-rose-500 cursor-pointer hover:text-rose-400"
+                size={30}
+              />
+            </div>
+          )}
           {value && (
             <div className="absolute inset-0 w-full h-full">
               <Image
