@@ -1,13 +1,14 @@
 "use client";
 
-import { FC, Fragment, useCallback, useState } from "react";
-import { IoCloudDone } from "react-icons/io5";
-import { TbCloudUpload, TbPhotoPlus } from "react-icons/tb";
-import Dropzone, { Accept, FileRejection } from "react-dropzone";
 import Image from "next/image";
-import { uploadToS3, deleteFromS3 } from "@/utils/s3";
+import { FC, Fragment, useCallback, useState } from "react";
+import Dropzone, { Accept, FileRejection } from "react-dropzone";
+
+import { IoCloudDone } from "react-icons/io5";
 import { IoMdRemoveCircle } from "react-icons/io";
-import { toast } from "react-hot-toast";
+import { TbCloudUpload, TbPhotoPlus } from "react-icons/tb";
+
+import { uploadToS3, deleteFromS3 } from "@/utils/s3";
 import { ErrorToast, SuccessToast } from "../UI/Toast";
 
 interface ImageUploadProps {
@@ -65,7 +66,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onImageChange, value }) => {
     }
   };
 
-  const renderUploadState = () => {
+  const renderUploadState = useCallback(() => {
     if (isLoading) {
       return (
         <Fragment>
@@ -90,7 +91,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onImageChange, value }) => {
         <div className="font-semibold text-lg">Click to upload</div>
       </Fragment>
     );
-  };
+  }, [isLoading, value]);
 
   return (
     <Dropzone
@@ -104,7 +105,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onImageChange, value }) => {
           {...getRootProps()}
           className={`relative transition border-dashed border-2 p-20 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 rounded-lg ${
             isLoading && "animate-pulse"
-          } ${value === "" && "hover:opacity-70 cursor-pointer"}`}
+          } ${!isImageSelected && "hover:opacity-70 cursor-pointer"}`}
           aria-disabled={isLoading}
           aria-label={
             isLoading ? "Uploading image" : "Drop or click to upload image"
