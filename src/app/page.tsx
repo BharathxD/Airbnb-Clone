@@ -1,13 +1,14 @@
 import Container from "@/components/UI/Container";
 import EmptyState from "@/components/UI/EmptyState";
 import getListings from "./actions/getListings";
-import { Listing, User } from "@prisma/client";
+import { Listing } from "@prisma/client";
 import ListingsCard from "@/components/Listings/ListingsCard";
-import { getServerSession } from "next-auth";
+import getCurrentUser from "./actions/getCurrentUser";
+import { SafeUser } from "@/types";
 
 export default async function Home() {
   const listings: Listing[] = await getListings();
-  const user: User | null = await getServerSession();
+  const user: SafeUser | null = await getCurrentUser();
 
   if (listings.length === 0) {
     return <EmptyState showReset />;
