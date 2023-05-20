@@ -4,7 +4,7 @@ import EmptyState from "@/components/UI/EmptyState";
 export default function Home() {
   const isEmpty = true;
   if (isEmpty) {
-    return <EmptyState />;
+    return <EmptyState showReset />;
   }
   return (
     <Container>
