@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { FC } from "react";
 import Heading from "./Heading";
 import Button from "./Button";
-import { Router } from "next/router";
 
 interface EmptyStateProps {
   title?: string;
