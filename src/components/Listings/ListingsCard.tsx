@@ -1,5 +1,6 @@
 "use client";
 
+import useCountries from "@/hooks/useCountry";
 import { SafeUser } from "@/types";
 import { Listing, Reservation } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -25,6 +26,8 @@ const ListingsCard: FC<ListingsCardProps> = ({
   currentUser,
 }) => {
   const router = useRouter();
+  const { getByValue } = useCountries();
+  const location = getByValue(data.locationValue);
   return <div>{data.title}</div>;
 };
 
