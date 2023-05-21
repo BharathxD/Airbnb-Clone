@@ -104,10 +104,10 @@ const RentModal = () => {
       return onNext();
     }
     mutate(values);
-    router.refresh();
     reset();
     setStep(STEPS.CATEGORY);
     rentModal.onClose();
+    router.refresh();
   };
 
   const actionLabel = useMemo(() => {

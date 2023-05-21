@@ -69,30 +69,33 @@ const ListingsCard: FC<ListingsCardProps> = ({
             alt={"Listing"}
             width={100}
             height={100}
+            quality={100}
             className="object-cover h-full w-full group-hover:scale-110 transition"
           />
           <div className="absolute top-3 right-3">
             <HeartButton listingId={data.id} currentUser={currentUser} />
           </div>
         </div>
-        <div className="font-semibold text-lg">
-          {location?.region}, {location?.label}
+        <div>
+          <div className="font-semibold text-lg">
+            {location?.region}, {location?.label}
+          </div>
+          <div className="font-light text-neutral-500">
+            {reservationDate || `${data.title} • ${data.description}`}
+          </div>
+          <div className="flex flex-row items-center gap-1">
+            <div className="font-semibold">${price}</div>
+            {!reservation && <div className="font-light">night</div>}
+          </div>
+          {onAction && actionLabel && (
+            <Button
+              disabled={disabled}
+              small
+              label={actionLabel}
+              onClick={handleCancel}
+            />
+          )}
         </div>
-        <div className="font-light text-neutral-500">
-          {reservationDate || data.category}
-        </div>
-        <div className="flex flex-row items-center gap-1">
-          <div className="font-semibold">${price}</div>
-          {!reservation && <div className="font-light">night</div>}
-        </div>
-        {onAction && actionLabel && (
-          <Button
-            disabled={disabled}
-            small
-            label={actionLabel}
-            onClick={handleCancel}
-          />
-        )}
       </div>
     </div>
   );
