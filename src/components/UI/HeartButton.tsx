@@ -2,7 +2,9 @@
 
 import { SafeUser } from "@/types";
 import { Listing } from "@prisma/client";
-import { FC } from "react";
+import axios from "axios";
+import { StatusCodes } from "http-status-codes";
+import { FC, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 interface HeartButtonProps {
@@ -11,9 +13,15 @@ interface HeartButtonProps {
 }
 
 const HeartButton: FC<HeartButtonProps> = ({ listingId, currentUser }) => {
-  const hasFavorited = currentUser?.favoriteIds.includes(listingId);
-  const toggleFavorite = async () => {
-    
+  const hasFavorited = currentUser?.favoriteIds.includes(listingId) || false;
+  const [hasLiked, setHasLiked] = useState<boolean>(hasFavorited);
+  const toggleFavorite = async (
+    event: React.MouseEvent<HTMLDivElement | SVGElement>
+  ) => {
+    event.stopPropagation();
+    const response = await axios.patch(`/favorite/${listingId}`);
+    console.log(response.statusText);
+    setHasLiked(response.status === StatusCodes.OK);
   };
   return (
     <div
@@ -27,7 +35,7 @@ const HeartButton: FC<HeartButtonProps> = ({ listingId, currentUser }) => {
       <AiFillHeart
         size={24}
         onClick={toggleFavorite}
-        className={hasFavorited ? "fill-rose-500" : "fill-neutral-500/70"}
+        className={hasLiked ? "fill-rose-500" : "fill-neutral-500/70"}
       />
     </div>
   );

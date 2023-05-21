@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import prisma from "@/libs/prismadb";
 import { StatusCodes } from "http-status-codes";
+import prisma from "@/libs/prismadb";
 
 interface IParams {
     listingId?: string;
@@ -17,8 +17,7 @@ export async function PATCH(
         if (!currentUser) {
             return NextResponse.json({
                 message: "Unauthenticated",
-                status: StatusCodes.FORBIDDEN,
-            });
+            }, { status: StatusCodes.FORBIDDEN, });
         }
 
         const { listingId } = params;
@@ -26,26 +25,24 @@ export async function PATCH(
         if (!listingId || typeof listingId !== "string") {
             return NextResponse.json({
                 message: "Invalid listing ID",
-                status: StatusCodes.BAD_REQUEST,
-            });
+            }, { status: StatusCodes.BAD_REQUEST, });
         }
 
-        /**
-        * The callback function checks if the current element (id) is not equal to the listingId.
-        * If the condition is true, meaning the element is not equal to the listingId, it will be included in the new filtered array.
-        * If the condition is false, meaning the element is equal to the listingId, it will be excluded from the new filtered array.
-        */
-        const favoriteIds = currentUser.favoriteIds.filter(
-            (id) => id !== listingId
-        );
+        const favoriteIds = currentUser.favoriteIds;
+        let updatedFavoriteIds = [];
 
-        // Update the database
+        if (favoriteIds.length === 0) {
+            updatedFavoriteIds.push(listingId);
+        } else {
+            updatedFavoriteIds = currentUser.favoriteIds.filter((id) => id !== listingId);
+        }
+
         const updatedUser = await prisma.user.update({
             where: {
                 id: currentUser.id,
             },
             data: {
-                favoriteIds,
+                favoriteIds: updatedFavoriteIds,
             },
         });
 
@@ -56,6 +53,7 @@ export async function PATCH(
         console.error("An error occurred:", error);
         return NextResponse.json({
             message: "Internal server error",
+        }, {
             status: StatusCodes.INTERNAL_SERVER_ERROR,
         });
     }
