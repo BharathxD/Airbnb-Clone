@@ -11,8 +11,10 @@ interface HeartButtonProps {
 }
 
 const HeartButton: FC<HeartButtonProps> = ({ listingId, currentUser }) => {
-  const hasFavorited = false;
-  const toggleFavorite = () => {};
+  const hasFavorited = currentUser?.favoriteIds.includes(listingId);
+  const toggleFavorite = async () => {
+    
+  };
   return (
     <div
       onClick={toggleFavorite}
