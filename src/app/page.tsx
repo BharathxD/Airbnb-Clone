@@ -4,7 +4,7 @@ import getListings from "./actions/getListings";
 import { Listing } from "@prisma/client";
 import ListingsCard from "@/components/Listings/ListingsCard";
 import getCurrentUser from "./actions/getCurrentUser";
-import { SafeUser } from "@/types";
+import { SafeListing, SafeUser } from "@/types";
 
 export default async function Home() {
   const listings: Listing[] = await getListings();
@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <Container>
       <div className="pt-[25vh] grid grid-cols-1 sm:grid-cols-2 md:grid-col-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-        {listings.map((listing: Listing) => (
+        {listings.map((listing: SafeListing) => (
           <ListingsCard key={listing.id} data={listing} currentUser={user} />
         ))}
       </div>
