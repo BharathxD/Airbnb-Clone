@@ -8,14 +8,15 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FC, useCallback, useMemo } from "react";
 import HeartButton from "../UI/HeartButton";
+import Button from "../UI/Button";
 
 interface ListingsCardProps {
   data: Listing;
   currentUser?: SafeUser | null;
   reservation: Reservation;
-  onAction: (id: string) => void;
+  onAction?: (id: string) => void;
   disabled?: boolean;
-  actionlabel?: string;
+  actionLabel?: string;
   actionId?: string;
 }
 
@@ -24,7 +25,7 @@ const ListingsCard: FC<ListingsCardProps> = ({
   reservation,
   onAction,
   disabled,
-  actionlabel,
+  actionLabel,
   actionId = "",
   currentUser,
 }) => {
@@ -74,6 +75,24 @@ const ListingsCard: FC<ListingsCardProps> = ({
             <HeartButton listingId={data.id} currentUser={currentUser} />
           </div>
         </div>
+        <div className="font-semibold text-lg">
+          {location?.region}, {location?.label}
+        </div>
+        <div className="font-light text-neutral-500">
+          {reservationDate || data.category}
+        </div>
+        <div className="flex flex-row items-center gap-1">
+          <div className="font-semibold">${price}</div>
+          {!reservation && <div className="font-light">night</div>}
+        </div>
+        {onAction && actionLabel && (
+          <Button
+            disabled={disabled}
+            small
+            label={actionLabel}
+            onClick={handleCancel}
+          />
+        )}
       </div>
     </div>
   );
