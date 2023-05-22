@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/libs/prismadb";
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import getCurrentUser from "@/actions/getCurrentUser";
 import { StatusCodes } from "http-status-codes";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {

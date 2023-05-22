@@ -24,7 +24,7 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
       }
       try {
         setIsLiked((value) => !value);
-        await axios.patch(`/favorite/${listingId}`);
+        await axios.patch(`/api/favorite/${listingId}`);
         router.refresh();
       } catch (error: any) {
         console.log(error.message);

@@ -4,7 +4,7 @@ import { Nunito, Montserrat } from "next/font/google";
 import RegisterModal from "@/components/Modals/RegisterModal";
 import ToasterProvider from "../providers/ToasterProvider";
 import LoginModal from "@/components/Modals/LoginModal";
-import getCurrentUser from "./actions/getCurrentUser";
+import getCurrentUser from "../actions/getCurrentUser";
 import RentModal from "@/components/Modals/RentModal";
 import RtkProvider from "@/providers/RtkProvider";
 
