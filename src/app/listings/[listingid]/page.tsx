@@ -14,7 +14,11 @@ const ListingPage = async ({ params }: IParams) => {
   const listing = await getListingById(params);
   const currentUser = await getCurrentUser();
   if (!listing) return <EmptyState />;
-  return <ListingClient listing={listing} currentUser={currentUser} />;
+  return (
+    <div className="pt-[12vh]">
+      <ListingClient listing={listing} currentUser={currentUser} />
+    </div>
+  );
 };
 
 export default ListingPage;

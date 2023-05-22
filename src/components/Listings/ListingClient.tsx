@@ -3,6 +3,8 @@ import { SafeListing, SafeUser } from "@/types";
 import { Reservation } from "@prisma/client";
 import Container from "../UI/Container";
 import { FC, useMemo } from "react";
+import ListingHead from "./ListingHead";
+import HeartButton from "../UI/HeartButton";
 
 interface ListingClientProps {
   listing: SafeListing & {
