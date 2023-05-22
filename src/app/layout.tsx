@@ -11,7 +11,7 @@ import RtkProvider from "@/providers/RtkProvider";
 const inter = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Airbnb",
+  title: "Holiday Homes & Apartment Rentals - Airbnb",
   description: "This is an Airbnb Clone",
 };
 

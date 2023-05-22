@@ -90,9 +90,9 @@ const ListingsCard: FC<ListingsCardProps> = ({
           {onAction && actionLabel && (
             <Button
               disabled={disabled}
-              small
               label={actionLabel}
               onClick={handleCancel}
+              small
             />
           )}
         </div>
