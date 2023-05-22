@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import s3 from "../../../aws/s3/s3";
+import s3 from "../../../../aws/s3/s3";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 import { DeleteObjectRequest } from "aws-sdk/clients/s3";
