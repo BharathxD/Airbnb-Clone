@@ -1,9 +1,10 @@
 "use server";
 
 import prisma from "@/libs/prismadb";
+import { Listing } from "@prisma/client";
 
 interface IParams {
-    listingId?: string;
+    listingId?: Listing["id"];
 }
 
 const getListingById = async (params: IParams) => {
