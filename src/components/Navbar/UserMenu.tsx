@@ -62,14 +62,12 @@ const UserMenu: FC<UserMenuProps> = ({ currentUser }) => {
                 <MenuItem onClick={() => {}} label="My Properties" />
                 <MenuItem onClick={onRent} label="Airbnb my Home" />
                 <hr />
-                <MenuItem onClick={() => signOut()} label="Logout" disabled />
+                <MenuItem onClick={() => signOut()} label="Logout" />
               </Fragment>
             ) : (
               <Fragment>
                 <MenuItem
-                  onClick={() => {
-                    registerModal.onOpen();
-                  }}
+                  onClick={() => registerModal.onOpen()}
                   label="Sign Up"
                   bold
                 />

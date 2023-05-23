@@ -6,18 +6,14 @@ import CategoryBox from "../UI/CategoryBox";
 import { usePathname, useSearchParams } from "next/navigation";
 import { categories } from "@/constants/Categories";
 
-interface CategoriesProps {}
-
-const Categories: FC<CategoriesProps> = () => {
+const Categories: FC = () => {
   const params = useSearchParams();
   const category = params?.get("category");
   const pathname = usePathname();
   const isMainPage = pathname === "/";
 
-  if (!isMainPage) {
-    // If it's not mainpage return null
-    return null;
-  }
+  // If it's not mainpage return null
+  if (!isMainPage) return null;
 
   return (
     <Container>
