@@ -12,17 +12,11 @@ export const getSession = async () => {
 const getCurrentUser = async (): Promise<SafeUser | null> => {
   try {
     const session = await getSession();
-    if (!session?.user?.email) {
-      return null;
-    }
+    if (!session?.user?.email) return null;
     const currentUser = await prisma.user.findUnique({
-      where: {
-        email: session.user.email,
-      },
+      where: { email: session.user.email }
     });
-    if (!currentUser) {
-      return null;
-    }
+    if (!currentUser) return null;
     return {
       ...currentUser,
       createdAt: currentUser.createdAt.toISOString(),
@@ -30,7 +24,7 @@ const getCurrentUser = async (): Promise<SafeUser | null> => {
       emailVerified: currentUser.emailVerified?.toISOString() || null,
     };
   } catch (error: any) {
-    return null;
+    throw new Error(error);
   }
 };
 
