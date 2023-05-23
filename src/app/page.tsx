@@ -1,13 +1,12 @@
 import Container from "@/components/UI/Container";
 import EmptyState from "@/components/UI/EmptyState";
 import getListings from "../actions/getListings";
-import { Listing } from "@prisma/client";
 import ListingsCard from "@/components/Listings/ListingsCard";
 import getCurrentUser from "../actions/getCurrentUser";
 import { SafeListing, SafeUser } from "@/types";
 
 export default async function Home() {
-  const listings: Listing[] = await getListings();
+  const listings: SafeListing[] = await getListings();
   const user: SafeUser | null = await getCurrentUser();
 
   if (listings.length === 0) {
