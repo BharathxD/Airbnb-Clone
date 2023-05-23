@@ -6,6 +6,7 @@ interface useRentModalStore {
   onClose: () => void;
 }
 
+
 const useRentModal = create<useRentModalStore>((set) => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
