@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/libs/prismadb";
+import { SafeListing, SafeUser } from "@/types";
 import { Listing } from "@prisma/client";
 
 interface IParams {
@@ -12,12 +13,8 @@ const getListingById = async (params: IParams) => {
     const { listingId } = params;
     if (!listingId) return null;
     const listing = await prisma.listing.findUnique({
-      where: {
-        id: listingId,
-      },
-      include: {
-        user: true,
-      },
+      where: { id: listingId },
+      include: { user: true }
     });
     if (!listing) return null;
     return {
