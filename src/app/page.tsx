@@ -9,9 +9,7 @@ export default async function Home() {
   const listings: SafeListing[] = await getListings();
   const user: SafeUser | null = await getCurrentUser();
 
-  if (listings.length === 0) {
-    return <EmptyState showReset />;
-  }
+  if (listings.length === 0) return <EmptyState showReset />;
 
   return (
     <Container>
@@ -22,5 +20,4 @@ export default async function Home() {
       </div>
     </Container>
   );
-  F;
 }
