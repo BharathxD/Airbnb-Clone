@@ -21,5 +21,6 @@ export default async function Home() {
         ))}
       </div>
     </Container>
-  );F
+  );
+  F;
 }

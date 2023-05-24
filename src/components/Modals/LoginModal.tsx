@@ -46,15 +46,15 @@ const LoginModal = () => {
         redirect: false,
       });
 
+      if (response?.status === StatusCodes.UNAUTHORIZED) {
+        return showToast(response?.error!, "error");
+      }
+
       if (response?.ok) {
         showToast("Logged In", "success");
         loginModal.onClose();
         router.refresh();
         return reset();
-      }
-
-      if (response?.status === StatusCodes.UNAUTHORIZED) {
-        return showToast(response?.error!, "error");
       }
 
       throw new Error("Oops! Something went wrong. Please try again later.");

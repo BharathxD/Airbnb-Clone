@@ -35,7 +35,9 @@ export const uploadToS3 = async (file: File): Promise<string | undefined> => {
  * the Promise resolves to `true`. If there is an error while deleting the object, the Promise resolves
  * to `false`.
  */
-export const deleteFromS3 = async (fullImageUrl: string): Promise<boolean | null> => {
+export const deleteFromS3 = async (
+  fullImageUrl: string
+): Promise<boolean | null> => {
   const image = encodeURIComponent(fullImageUrl);
   try {
     const response = await axios.post(`/api/media?key=${image}`);
