@@ -1,8 +1,7 @@
 # Airbnb Clone
 
-![Airbnb Logo](./public/images/logo.svg)
-
-This is a full stack Airbnb clone.
+![Airbnb Logo](./airbnb.jpg)
+`This is a full stack Airbnb clone.`
 
 ## Why is the NextAuth Handler Route is in Pages folder?
 
