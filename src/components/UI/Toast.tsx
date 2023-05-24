@@ -2,22 +2,20 @@
 
 import { toast } from "react-hot-toast";
 
-export const ErrorToast = (message: string, id?: string) => {
-  return toast.error(message, {
+export const showToast = (
+  message: string,
+  type: "error" | "success",
+  id?: string
+) => {
+  const options = {
     duration: 5000,
     id,
     style: {
       minWidth: "max-content",
     },
-  });
-};
+  };
 
-export const SuccessToast = (message: string, id?: string) => {
-  return toast.success(message, {
-    duration: 5000,
-    id,
-    style: {
-      minWidth: "max-content",
-    },
-  });
+  if (type === "error") return toast.error(message, options);
+
+  return toast.success(message, options);
 };
