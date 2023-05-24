@@ -3,7 +3,7 @@ import { SafeUser } from "@/types";
 import useLoginModal from "./useLoginModal";
 import React, { useCallback, useState } from "react";
 import axios from "axios";
-import { ErrorToast } from "@/components/UI/Toast";
+import showToast from "@/components/UI/Toast";
 import { useRouter } from "next/navigation";
 
 interface IUseFavorite {
@@ -28,7 +28,7 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
         router.refresh();
       } catch (error: any) {
         console.log(error.message);
-        ErrorToast("Something went wrong");
+        showToast("Something went wrong", "error");
       }
     },
     [currentUser, loginModal, listingId, router]

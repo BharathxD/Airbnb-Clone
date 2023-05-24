@@ -11,7 +11,7 @@ import Modal from "./Modal";
 import Heading from "../UI/Heading";
 import Input from "../Inputs/Input";
 import Button from "../UI/Button";
-import { ErrorToast } from "../UI/Toast";
+import showToast from "../UI/Toast";
 import useLoginModal from "@/hooks/useLoginModal";
 import { StatusCodes } from "http-status-codes";
 import { signIn } from "next-auth/react";
@@ -52,11 +52,15 @@ const RegisterModal = () => {
       reset();
     } catch (error: any) {
       if (error?.response?.status === StatusCodes.CONFLICT) {
-        ErrorToast(
-          "User already exists. Please try again with a different email."
+        showToast(
+          "User already exists. Please try again with a different email.",
+          "error"
         );
       } else {
-        ErrorToast("Oops! Something went wrong. Please try again later.");
+        showToast(
+          "Oops! Something went wrong. Please try again later.",
+          "error"
+        );
       }
     } finally {
       setIsLoading(false);

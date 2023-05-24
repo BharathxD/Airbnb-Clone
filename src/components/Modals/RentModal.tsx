@@ -15,7 +15,7 @@ import Input from "../Inputs/Input";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { ErrorToast, SuccessToast } from "../UI/Toast";
+import showToast from "../UI/Toast";
 
 const enum STEPS {
   CATEGORY = 1,
@@ -47,10 +47,10 @@ const RentModal = () => {
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: FieldValues) => {
       await axios.post("/api/listings", data);
-      SuccessToast("List Created!");
+      showToast("List Created!", "success");
     },
     onError: () => {
-      ErrorToast("List cannot be created, please try again later");
+      showToast("List cannot be created, please try again later", "error");
     },
   });
 
