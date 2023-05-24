@@ -9,7 +9,7 @@ import { IoMdRemoveCircle } from "react-icons/io";
 import { TbCloudUpload, TbPhotoPlus } from "react-icons/tb";
 
 import { uploadToS3, deleteFromS3 } from "@/utils/s3";
-import { ErrorToast, SuccessToast } from "../UI/Toast";
+import showToast from "../UI/Toast";
 
 interface ImageUploadProps {
   onImageChange: (value: string) => void;
@@ -43,7 +43,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onImageChange, value }) => {
         setIsLoading(false);
       } catch (error: any) {
         console.log(`Error uploading the image: ${error.message}`);
-        ErrorToast("Something went wrong, please try again later");
+        showToast("Something went wrong, please try again later", "error");
         setIsLoading(false);
       }
     },
@@ -58,11 +58,11 @@ const ImageUpload: FC<ImageUploadProps> = ({ onImageChange, value }) => {
           throw new Error("Cannot delete the picture");
         }
         onImageChange("");
-        SuccessToast("Deleted the picture");
+        showToast("Deleted the picture", "success");
       }
     } catch (error: any) {
       console.log(error.message);
-      ErrorToast("Cannot delete the picture");
+      showToast("Cannot delete the picture", "error");
     }
   };
 

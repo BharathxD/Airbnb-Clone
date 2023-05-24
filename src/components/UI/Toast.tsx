@@ -2,11 +2,7 @@
 
 import { toast } from "react-hot-toast";
 
-export const showToast = (
-  message: string,
-  type: "error" | "success",
-  id?: string
-) => {
+const showToast = (message: string, type: "error" | "success", id?: string) => {
   const options = {
     duration: 5000,
     id,
@@ -19,3 +15,5 @@ export const showToast = (
 
   return toast.success(message, options);
 };
+
+export default showToast;

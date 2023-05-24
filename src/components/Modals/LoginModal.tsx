@@ -10,7 +10,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import Modal from "./Modal";
 import Input from "../Inputs/Input";
 import Button from "../UI/Button";
-import { ErrorToast, SuccessToast } from "../UI/Toast";
+import showToast from "../UI/Toast";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { StatusCodes } from "http-status-codes";
 import Heading from "../UI/Heading";
@@ -47,19 +47,19 @@ const LoginModal = () => {
       });
 
       if (response?.ok) {
-        SuccessToast("Logged In");
+        showToast("Logged In", "success");
         loginModal.onClose();
         router.refresh();
         return reset();
       }
 
       if (response?.status === StatusCodes.UNAUTHORIZED) {
-        return ErrorToast(response?.error!);
+        return showToast(response?.error!, "error");
       }
 
       throw new Error("Oops! Something went wrong. Please try again later.");
     } catch (error: any) {
-      ErrorToast(error.message);
+      showToast(error.message, "error");
     } finally {
       setIsLoading(false);
     }
