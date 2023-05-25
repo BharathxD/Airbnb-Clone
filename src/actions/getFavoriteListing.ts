@@ -1,7 +1,12 @@
 import prismadb from "@/libs/prismadb";
 import getCurrentUser from "./getCurrentUser";
+import { SafeListing } from "@/types";
 
-const getFavoriteListing = async () => {
+type FavoriteListing = SafeListing[] & {
+    createdAt: string
+}[];
+
+const getFavoriteListing = async (): Promise<FavoriteListing | [] | undefined> => {
     try {
         const user = await getCurrentUser();
         if (!user) return [];
@@ -12,8 +17,8 @@ const getFavoriteListing = async () => {
                 }
             }
         })
-        const safeFavorites = favListings.map((listing) => {
-            return { ...listing, updatedAt: listing.createdAt.toString() }
+        const safeFavorites: FavoriteListing = favListings.map((listing) => {
+            return { ...listing, createdAt: listing.createdAt.toString() }
         })
         return safeFavorites;
     } catch (error: any) {
