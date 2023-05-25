@@ -1,4 +1,5 @@
 import prisma from "@/libs/prismadb";
+import { SafeReservation } from "@/types";
 
 interface IQueryParams {
     userId?: string;
@@ -20,7 +21,7 @@ const getReservation = async ({ userId, authorId, listingId }: IQueryParams) => 
                 createdAt: "desc"
             }
         })
-        const safeReservation = reservations.map((reservation) => {
+        const safeReservation: SafeReservation[] = reservations.map((reservation) => {
             return {
                 ...reservation,
                 createdAt: reservation.createdAt.toISOString(),
@@ -30,7 +31,7 @@ const getReservation = async ({ userId, authorId, listingId }: IQueryParams) => 
                     ...reservation.listing,
                     createdAt: reservation.listing.createdAt.toISOString()
                 }
-            }
+            } satisfies SafeReservation
         })
         return safeReservation;
     } catch (error: any) {
