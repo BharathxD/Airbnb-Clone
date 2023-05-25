@@ -18,7 +18,7 @@ const getFavoriteListing = async (): Promise<FavoriteListing | [] | undefined> =
             }
         })
         const safeFavorites: FavoriteListing = favListings.map((listing) => {
-            return { ...listing, createdAt: listing.createdAt.toString() }
+            return { ...listing, createdAt: listing.createdAt.toISOString() }
         })
         return safeFavorites;
     } catch (error: any) {
