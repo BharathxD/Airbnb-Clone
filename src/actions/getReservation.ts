@@ -20,6 +20,19 @@ const getReservation = async ({ userId, authorId, listingId }: IQueryParams) => 
                 createdAt: "desc"
             }
         })
+        const safeReservation = reservations.map((reservation) => {
+            return {
+                ...reservation,
+                createdAt: reservation.createdAt.toISOString(),
+                startDate: reservation.startDate.toISOString(),
+                endDate: reservation.endDate.toISOString(),
+                listing: {
+                    ...reservation.listing,
+                    createdAt: reservation.listing.createdAt.toISOString()
+                }
+            }
+        })
+        return safeReservation;
     } catch (error: any) {
         throw new Error(error);
     }
