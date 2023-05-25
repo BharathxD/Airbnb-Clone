@@ -48,7 +48,9 @@ const ListingInfo: FC<ListingInfoProps> = ({
         </div>
         <div className="flex flex-row items-center gap-3 font-light text-neutral-500">
           <div>{guestCount} guests</div>
+          &bull;
           <div>{roomCount} rooms</div>
+          &bull;
           <div>{bathroomCount} bathrooms</div>
         </div>
       </div>
