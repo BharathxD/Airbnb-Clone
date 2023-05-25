@@ -4,12 +4,12 @@ import { categories } from "@/constants/Categories";
 import { SafeListing, SafeUser } from "@/types";
 import { Reservation } from "@prisma/client";
 import Container from "../UI/Container";
-import { FC, useMemo, useState } from "react";
+import { FC, SetStateAction, useEffect, useMemo, useState } from "react";
 import ListingHead from "./ListingHead";
 import ListingInfo from "./ListingInfo";
 import useLoginModal from "@/hooks/useLoginModal";
 import { useRouter } from "next/navigation";
-import { eachDayOfInterval } from "date-fns";
+import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { StatusCodes } from "http-status-codes";
@@ -74,6 +74,21 @@ const ListingClient: FC<ListingClientProps> = ({
   const category = useMemo(() => {
     return categories.find((category) => category.label === listing.category);
   }, [listing.category]);
+
+  useEffect(() => {
+    if (dateRange.startDate && dateRange.endDate) {
+      const dayCount = differenceInCalendarDays(
+        dateRange.endDate,
+        dateRange.startDate
+      );
+      if (dayCount && listing.price) {
+        setTotalPrice(dayCount * listing.price);
+      } else {
+        setTotalPrice(listing.price);
+      }
+    }
+  }, [dateRange.endDate, dateRange.startDate, listing.price]);
+
   return (
     <Container>
       <div className="max-w-screen lg mx-auto min-h-max">
@@ -95,6 +110,22 @@ const ListingClient: FC<ListingClientProps> = ({
               bathroomCount={listing.bathroomCount}
               locationValue={listing.locationValue}
             />
+            <div className="order-first mb-10 md:order-last md: col-span-3">
+              <ListingReservation
+                price={listing.price}
+                totalPrice={totalPrice}
+                onChangeDate={(
+                  value: SetStateAction<{
+                    startDate: Date;
+                    endDate: Date;
+                    key: string;
+                  }>
+                ) => setDateRange(value)}
+                dateRange={dateRange}
+                onSubmit={mutate}
+                disabled={isLoading}
+              />
+            </div>
           </div>
         </div>
       </div>
