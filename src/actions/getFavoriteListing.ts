@@ -1,4 +1,4 @@
-import prismadb from "@/libs/prismadb";
+import prisma from "@/libs/prismadb";
 import getCurrentUser from "./getCurrentUser";
 import { SafeListing } from "@/types";
 
@@ -10,7 +10,7 @@ const getFavoriteListing = async (): Promise<FavoriteListing | [] | undefined> =
     try {
         const user = await getCurrentUser();
         if (!user) return [];
-        const favListings = await prismadb.listing.findMany({
+        const favListings = await prisma.listing.findMany({
             where: {
                 id: {
                     in: [...(user.favoriteIds || [])]
