@@ -22,7 +22,7 @@ const ListingClient: FC<ListingClientProps> = ({ listing, currentUser }) => {
   }, [listing.category]);
   return (
     <Container>
-      <div className="max-w-screen lg mx-auto">
+      <div className="max-w-screen lg mx-auto min-h-[200vh]">
         <div className="flex flex-col gap-6">
           <ListingHead
             currentUser={currentUser}
