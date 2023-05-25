@@ -55,6 +55,9 @@ const ListingInfo: FC<ListingInfoProps> = ({
           description={category.description}
         />
       )}
+      <hr />
+      <div className="text-lg font-light text-neutral-500">{description}</div>
+      <hr />
     </div>
   );
 };
