@@ -4,9 +4,22 @@ import { categories } from "@/constants/Categories";
 import { SafeListing, SafeUser } from "@/types";
 import { Reservation } from "@prisma/client";
 import Container from "../UI/Container";
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import ListingHead from "./ListingHead";
 import ListingInfo from "./ListingInfo";
+import useLoginModal from "@/hooks/useLoginModal";
+import { useRouter } from "next/navigation";
+import { eachDayOfInterval } from "date-fns";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { StatusCodes } from "http-status-codes";
+import showToast from "../UI/Toast";
+
+const initialDateRange = {
+  startDate: new Date(),
+  endDate: new Date(),
+  key: "selection",
+};
 
 interface ListingClientProps {
   listing: SafeListing & {
@@ -16,13 +29,54 @@ interface ListingClientProps {
   reservations?: Reservation[];
 }
 
-const ListingClient: FC<ListingClientProps> = ({ listing, currentUser }) => {
+const ListingClient: FC<ListingClientProps> = ({
+  listing,
+  currentUser,
+  reservations = [],
+}) => {
+  const loginModal = useLoginModal();
+  const router = useRouter();
+
+  const [totalPrice, setTotalPrice] = useState(listing.price);
+  const [dateRange, setDateRange] = useState(initialDateRange);
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post("/api/reservations", {
+        totalPrice,
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+        listing: listing?.id,
+      });
+      if (response.status !== StatusCodes.OK) {
+        showToast("Unable to reserve the Listing!", "error");
+      }
+      showToast("Listing reserved!", "success");
+      setDateRange(initialDateRange);
+      // TODO: redirect to /trips route
+      router.refresh();
+    },
+  });
+
+  // List of dates that are unavailabled/booked
+  const disabledDates = useMemo(() => {
+    let dates: Date[] = [];
+
+    reservations.forEach((reservation: Reservation) => {
+      const range = eachDayOfInterval({
+        start: new Date(reservation.startDate),
+        end: new Date(reservation.endDate),
+      });
+      dates = [...dates, ...range];
+    });
+    return dates;
+  }, [reservations]);
   const category = useMemo(() => {
     return categories.find((category) => category.label === listing.category);
   }, [listing.category]);
   return (
     <Container>
-      <div className="max-w-screen lg mx-auto min-h-[200vh]">
+      <div className="max-w-screen lg mx-auto min-h-max">
         <div className="flex flex-col gap-6">
           <ListingHead
             currentUser={currentUser}
