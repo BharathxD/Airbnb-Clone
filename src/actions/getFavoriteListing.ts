@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/libs/prismadb";
 import getCurrentUser from "./getCurrentUser";
 import { SafeListing } from "@/types";
