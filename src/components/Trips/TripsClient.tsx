@@ -23,7 +23,9 @@ const TripsClient: FC<TripsClient> = ({ reservations, currentUser }) => {
       axios.delete(`/api/reservations/${id}`);
     },
     onSuccess: () => {
-      router.refresh();
+      setTimeout(() => {
+        router.refresh();
+      }, 300);
       showToast("Reservation Cancelled", "success");
     },
     onError(error: AxiosError) {
