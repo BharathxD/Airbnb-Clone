@@ -2,14 +2,17 @@
 
 import { categories } from "@/constants/Categories";
 import { SafeListing, SafeReservation, SafeUser } from "@/types";
-import { Reservation } from "@prisma/client";
 import Container from "../UI/Container";
 import { FC, useEffect, useMemo, useState } from "react";
 import ListingHead from "./ListingHead";
 import ListingInfo from "./ListingInfo";
 import useLoginModal from "@/hooks/useLoginModal";
 import { useRouter } from "next/navigation";
-import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
+import {
+  differenceInCalendarDays,
+  eachDayOfInterval,
+  isSameDay,
+} from "date-fns";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { StatusCodes } from "http-status-codes";
@@ -93,8 +96,27 @@ const ListingClient: FC<ListingClientProps> = ({
 
   const handleSubmit = () => {
     if (!currentUser) {
-      return loginModal.onOpen();
+      loginModal.onOpen();
+      return;
     }
+
+    const startDate = dateRange.startDate;
+    if (!startDate) {
+      return;
+    }
+
+    const isDateReserved = disabledDates.some((date) =>
+      isSameDay(date, startDate)
+    );
+
+    if (isDateReserved) {
+      showToast(
+        "The date is already reserved, please choose another date",
+        "error"
+      );
+      return;
+    }
+
     mutate();
   };
 

@@ -1,3 +1,4 @@
+import { differenceInCalendarDays } from "date-fns";
 import { FC, SetStateAction } from "react";
 import { DateRange, Range, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css";
@@ -14,7 +15,6 @@ const Calendar: FC<CalendarProps> = ({ value, disabledDates, onChange }) => {
     <DateRange
       rangeColors={["#262626"]}
       ranges={[value]}
-      date={new Date()}
       onChange={onChange}
       direction={"vertical"}
       showDateDisplay={false}
