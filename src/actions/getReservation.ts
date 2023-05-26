@@ -13,7 +13,7 @@ const getReservation = async ({
   userId,
   authorId,
   listingId,
-}: IQueryParams) => {
+}: IQueryParams): Promise<SafeReservation[] | undefined> => {
   try {
     const query: IQueryParams = {
       ...(userId && { userId: userId }),
