@@ -1,8 +1,8 @@
 import { Listing } from "@prisma/client";
-import { FC, SetStateAction } from "react";
+import { FC } from "react";
 import { UseMutateFunction } from "react-query";
-import { Range, RangeKeyDict } from "react-date-range";
-import Calendar from "../UI/Calendar";
+import { Range } from "react-date-range";
+import Calendar from "../Inputs/Calendar";
 
 interface ListingReservationProps {
   price: Listing["price"];

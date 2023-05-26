@@ -4,7 +4,7 @@ import { categories } from "@/constants/Categories";
 import { SafeListing, SafeUser } from "@/types";
 import { Reservation } from "@prisma/client";
 import Container from "../UI/Container";
-import { FC, SetStateAction, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import ListingHead from "./ListingHead";
 import ListingInfo from "./ListingInfo";
 import useLoginModal from "@/hooks/useLoginModal";
