@@ -3,13 +3,14 @@ import { FC } from "react";
 import { UseMutateFunction } from "react-query";
 import { Range } from "react-date-range";
 import Calendar from "../Inputs/Calendar";
+import Button from "../UI/Button";
 
 interface ListingReservationProps {
   price: Listing["price"];
   totalPrice: number;
   onChangeDate: (value: Range) => void;
   dateRange: Range;
-  onSubmit: UseMutateFunction<void, unknown, void, unknown>;
+  onSubmit: () => void;
   disabled: boolean;
   disabledDates: Date[];
 }
@@ -36,6 +37,13 @@ const ListingReservation: FC<ListingReservationProps> = ({
         onChange={(value) => onChangeDate(value.selection)}
       />
       <hr />
+      <div className="p-4">
+        <Button disabled={disabled} label="Reserve" onClick={onSubmit} />
+      </div>
+      <div className="p-4 flex flex-row items-center justify-between font-semibold text-lg">
+        <div>Total</div>
+        <div>$ {totalPrice}</div>
+      </div>
     </div>
   );
 };

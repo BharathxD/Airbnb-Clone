@@ -45,18 +45,21 @@ const ListingClient: FC<ListingClientProps> = ({
   const { mutate, isLoading } = useMutation({
     mutationFn: async () => {
       const response = await axios.post("/api/reservations", {
-        totalPrice,
+        listingId: listing?.id,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
-        listing: listing?.id,
+        totalPrice,
       });
-      if (response.status !== StatusCodes.OK) {
-        showToast("Unable to reserve the Listing!", "error");
-      }
+      return response;
+    },
+    onSuccess(response, variables, context) {
       showToast("Listing reserved!", "success");
       setDateRange(initialDateRange);
       // TODO: redirect to /trips route
       router.refresh();
+    },
+    onError() {
+      showToast("Unable to reserve the Listing!", "error");
     },
   });
 
@@ -83,11 +86,9 @@ const ListingClient: FC<ListingClientProps> = ({
         dateRange.endDate,
         dateRange.startDate
       );
-      if (dayCount && listing.price) {
-        setTotalPrice(dayCount * listing.price);
-      } else {
-        setTotalPrice(listing.price);
-      }
+      const totalPrice =
+        dayCount && listing.price ? dayCount * listing.price : listing.price;
+      setTotalPrice(totalPrice);
     }
   }, [dateRange.endDate, dateRange.startDate, listing.price]);
 
@@ -118,7 +119,7 @@ const ListingClient: FC<ListingClientProps> = ({
                 totalPrice={totalPrice}
                 onChangeDate={(value) => setDateRange(value)}
                 dateRange={dateRange}
-                onSubmit={mutate}
+                onSubmit={() => mutate()}
                 disabled={isLoading}
                 disabledDates={disabledDates}
               />
