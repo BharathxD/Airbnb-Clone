@@ -19,7 +19,7 @@ import ListingReservation from "./ListingReservation";
 const initialDateRange = {
   startDate: new Date(),
   endDate: new Date(),
-  key: "selection",
+  key: 'selection'
 };
 
 interface ListingClientProps {
@@ -125,6 +125,7 @@ const ListingClient: FC<ListingClientProps> = ({
                 dateRange={dateRange}
                 onSubmit={mutate}
                 disabled={isLoading}
+                disabledDates={disabledDates}
               />
             </div>
           </div>
