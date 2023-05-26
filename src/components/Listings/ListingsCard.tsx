@@ -56,7 +56,6 @@ const ListingsCard: FC<ListingsCardProps> = ({
     const start = new Date(reservation.startDate);
     const end = new Date(reservation.endDate);
     const formattedDate = `${format(start, "PP")} - ${format(end, "PP")}`;
-    console.log(formattedDate);
     return formattedDate;
   }, [reservation]);
   return (
