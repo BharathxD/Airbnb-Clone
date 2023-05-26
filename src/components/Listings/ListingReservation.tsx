@@ -1,23 +1,13 @@
 import { Listing } from "@prisma/client";
 import { FC, SetStateAction } from "react";
 import { UseMutateFunction } from "react-query";
-import { Range } from "react-date-range";
+import { Range, RangeKeyDict } from "react-date-range";
 import Calendar from "../UI/Calendar";
-
-type onChangeDateArgs = {
-  selection: SetStateAction<{ startDate: Date; endDate: Date; key: string }>;
-};
 
 interface ListingReservationProps {
   price: Listing["price"];
   totalPrice: number;
-  onChangeDate: (
-    value: SetStateAction<{
-      startDate: Date;
-      endDate: Date;
-      key: string;
-    }>
-  ) => void;
+  onChangeDate: (value: Range) => void;
   dateRange: Range;
   onSubmit: UseMutateFunction<void, unknown, void, unknown>;
   disabled: boolean;
@@ -43,7 +33,7 @@ const ListingReservation: FC<ListingReservationProps> = ({
       <Calendar
         value={dateRange}
         disabledDates={disabledDates}
-        onChange={(value: onChangeDateArgs) => onChangeDate(value.selection)}
+        onChange={(value) => onChangeDate(value.selection)}
       />
       <hr />
     </div>

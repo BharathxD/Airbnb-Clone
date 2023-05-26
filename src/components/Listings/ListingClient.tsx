@@ -15,11 +15,12 @@ import axios from "axios";
 import { StatusCodes } from "http-status-codes";
 import showToast from "../UI/Toast";
 import ListingReservation from "./ListingReservation";
+import { Range } from "react-date-range";
 
 const initialDateRange = {
   startDate: new Date(),
   endDate: new Date(),
-  key: 'selection'
+  key: "selection",
 };
 
 interface ListingClientProps {
@@ -39,7 +40,7 @@ const ListingClient: FC<ListingClientProps> = ({
   const router = useRouter();
 
   const [totalPrice, setTotalPrice] = useState(listing.price);
-  const [dateRange, setDateRange] = useState(initialDateRange);
+  const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async () => {
@@ -115,13 +116,7 @@ const ListingClient: FC<ListingClientProps> = ({
               <ListingReservation
                 price={listing.price}
                 totalPrice={totalPrice}
-                onChangeDate={(
-                  value: SetStateAction<{
-                    startDate: Date;
-                    endDate: Date;
-                    key: string;
-                  }>
-                ) => setDateRange(value)}
+                onChangeDate={(value) => setDateRange(value)}
                 dateRange={dateRange}
                 onSubmit={mutate}
                 disabled={isLoading}

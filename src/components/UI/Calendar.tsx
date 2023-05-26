@@ -1,20 +1,27 @@
 import { FC, SetStateAction } from "react";
-import { Range } from "react-date-range";
-
-type onChangeDateArgs = {
-  selection: SetStateAction<{ startDate: Date; endDate: Date; key: string }>;
-};
+import { DateRange, Range, RangeKeyDict } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 interface CalendarProps {
   value: Range;
   disabledDates: Date[];
-  onChange: (value: onChangeDateArgs) => void;
+  onChange: (value: RangeKeyDict) => void;
 }
 
 const Calendar: FC<CalendarProps> = ({ value, disabledDates, onChange }) => {
-  return <div>
-    Calendar
-  </div>;
+  return (
+    <DateRange
+      rangeColors={["#262626"]}
+      ranges={[value]}
+      date={new Date()}
+      onChange={onChange}
+      direction={"vertical"}
+      showDateDisplay={false}
+      minDate={new Date()}
+      disabledDates={disabledDates}
+    />
+  );
 };
 
 export default Calendar;
