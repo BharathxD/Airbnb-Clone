@@ -21,7 +21,8 @@ const TripsClient: FC<TripsClient> = ({ reservations, currentUser }) => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async () => {
-      axios.delete(`/api/reservations/${deletingId}`);
+      // Using a `POST` request instead of `DELETE` due to a known bug in Next.js 13.3 (see GitHub: https://github.com/vercel/next.js/issues/48096).
+      await axios.post(`/api/reservations/${deletingId}`);
     },
     onSuccess: () => {
       showToast("Reservation Cancelled", "success");
@@ -54,6 +55,7 @@ const TripsClient: FC<TripsClient> = ({ reservations, currentUser }) => {
               currentUser={currentUser}
               reservation={reservation}
               disabled={isLoading}
+              onAction={() => mutate()}
               actionId={reservation.id}
               actionLabel="Cancel Reservation"
             />

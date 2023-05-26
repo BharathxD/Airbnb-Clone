@@ -44,13 +44,12 @@ const ListingClient: FC<ListingClientProps> = ({
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async () => {
-      const response = await axios.post("/api/reservations", {
+      await axios.post("/api/reservations", {
         listingId: listing?.id,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
         totalPrice,
       });
-      return response;
     },
     onSuccess(response, variables, context) {
       showToast("Listing reserved!", "success");
@@ -92,6 +91,13 @@ const ListingClient: FC<ListingClientProps> = ({
     }
   }, [dateRange.endDate, dateRange.startDate, listing.price]);
 
+  const handleSubmit = () => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    mutate();
+  };
+
   return (
     <Container>
       <div className="max-w-screen-lg mx-auto mb-20">
@@ -119,7 +125,7 @@ const ListingClient: FC<ListingClientProps> = ({
                 totalPrice={totalPrice}
                 onChangeDate={(value) => setDateRange(value)}
                 dateRange={dateRange}
-                onSubmit={() => mutate()}
+                onSubmit={handleSubmit}
                 disabled={isLoading}
                 disabledDates={disabledDates}
               />

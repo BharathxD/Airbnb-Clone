@@ -10,7 +10,7 @@ import { signOut } from "next-auth/react";
 import { SafeUser } from "@/types";
 import Language from "./Language";
 import useRentModal from "@/hooks/useRentModal";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
   currentUser: SafeUser | null | undefined;

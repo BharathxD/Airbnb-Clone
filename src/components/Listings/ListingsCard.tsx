@@ -55,14 +55,16 @@ const ListingsCard: FC<ListingsCardProps> = ({
     }
     const start = new Date(reservation.startDate);
     const end = new Date(reservation.endDate);
-    return `${format(start, "pp")} - ${format(end, "PP")}`;
+    const formattedDate = `${format(start, "PP")} - ${format(end, "PP")}`;
+    console.log(formattedDate);
+    return formattedDate;
   }, [reservation]);
   return (
     <div
       onClick={() => router.push(`/listings/${data.id}`)}
       className="col-span-1 cursor-pointer group"
     >
-      <div className="flex flex-col gap-2 w-full">
+      <div className={`flex flex-col w-full gap-2`}>
         <div className="aspect-square w-full relative overflow-hidden rounded-xl">
           <Image
             src={data.imageSrc}
@@ -76,7 +78,7 @@ const ListingsCard: FC<ListingsCardProps> = ({
             <HeartButton listingId={data.id} currentUser={currentUser} />
           </div>
         </div>
-        <div>
+        <div className={"flex flex-col gap-1"}>
           <div className="font-semibold text-lg">
             {location?.region}, {location?.label}
           </div>
@@ -87,14 +89,16 @@ const ListingsCard: FC<ListingsCardProps> = ({
             <div className="font-semibold">${price}</div>
             {!reservation && <div className="font-light">night</div>}
           </div>
-          {onAction && actionLabel && (
-            <Button
-              disabled={disabled}
-              label={actionLabel}
-              onClick={handleCancel}
-              small
-            />
-          )}
+          <div className="mt-1.5">
+            {onAction && actionLabel && (
+              <Button
+                disabled={disabled}
+                label={actionLabel}
+                onClick={handleCancel}
+                small
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
