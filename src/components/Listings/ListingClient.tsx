@@ -1,7 +1,7 @@
 "use client";
 
 import { categories } from "@/constants/Categories";
-import { SafeListing, SafeUser } from "@/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/types";
 import { Reservation } from "@prisma/client";
 import Container from "../UI/Container";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -28,7 +28,7 @@ interface ListingClientProps {
     user: SafeUser;
   };
   currentUser: SafeUser | null;
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
 }
 
 const ListingClient: FC<ListingClientProps> = ({
@@ -54,7 +54,7 @@ const ListingClient: FC<ListingClientProps> = ({
     onSuccess(response, variables, context) {
       showToast("Listing reserved!", "success");
       setDateRange(initialDateRange);
-      // TODO: redirect to /trips route
+      router.push("/trips");
       router.refresh();
     },
     onError() {
@@ -66,7 +66,7 @@ const ListingClient: FC<ListingClientProps> = ({
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
 
-    reservations.forEach((reservation: Reservation) => {
+    reservations.forEach((reservation: SafeReservation) => {
       const range = eachDayOfInterval({
         start: new Date(reservation.startDate),
         end: new Date(reservation.endDate),

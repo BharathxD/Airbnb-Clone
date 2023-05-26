@@ -17,13 +17,13 @@ interface TripsClient {
 
 const TripsClient: FC<TripsClient> = ({ reservations, currentUser }) => {
   const router = useRouter();
-  const [deletingId, setDeletingId] = useState<SafeListing["id"]>("");
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: async () => {
-      axios.delete(`/api/reservations/${deletingId}`);
+    mutationFn: async (id: SafeListing["id"]) => {
+      axios.delete(`/api/reservations/${id}`);
     },
     onSuccess: () => {
+      router.refresh();
       showToast("Reservation Cancelled", "success");
     },
     onError(error: AxiosError) {
@@ -31,13 +31,6 @@ const TripsClient: FC<TripsClient> = ({ reservations, currentUser }) => {
     },
   });
 
-  const onCancel = useCallback(
-    (id: SafeListing["id"]) => {
-      setDeletingId(id);
-      mutate();
-    },
-    [mutate]
-  );
   return (
     <Container>
       <Heading
@@ -53,7 +46,7 @@ const TripsClient: FC<TripsClient> = ({ reservations, currentUser }) => {
               currentUser={currentUser}
               reservation={reservation}
               disabled={isLoading}
-              onAction={onCancel}
+              onAction={(id: SafeListing["id"]) => mutate(id)}
               actionId={reservation.id}
               actionLabel="Cancel Reservation"
             />
