@@ -127,49 +127,46 @@ const RentModal = () => {
   const getBodyComponent = (step: STEPS) => {
     switch (step) {
       case STEPS.CATEGORY:
-        return renderCategoryStep();
+        return renderCategoryStep;
       case STEPS.LOCATION:
-        return renderLocationStep();
+        return renderLocationStep;
       case STEPS.INFO:
-        return renderInfoStep();
+        return renderInfoStep;
       case STEPS.IMAGES:
-        return renderImagesStep();
+        return renderImagesStep;
       case STEPS.DESCRIPTION:
-        return renderDescriptionStep();
+        return renderDescriptionStep;
       case STEPS.PRICE:
-        return renderPriceStep();
+        return renderPriceStep;
       default:
         return null;
     }
   };
 
-  const renderCategoryStep = () => {
+  const renderCategoryStep = (
     // CATEGORIES
-    return (
-      <div className="flex flex-col gap-8">
-        <Heading
-          title="Which of these best describes your place?"
-          subtitle="Pick a category"
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] p-3 overflow-y-auto">
-          {categories.map((item) => (
-            <div key={item.label} className="col-span-1">
-              <CategoryInput
-                onClick={(category) => setCustomValue("category", category)}
-                selected={category === item.label}
-                label={item.label}
-                Icon={item.icon}
-              />
-            </div>
-          ))}
-        </div>
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Which of these best describes your place?"
+        subtitle="Pick a category"
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] p-3 overflow-y-auto">
+        {categories.map((item) => (
+          <div key={item.label} className="col-span-1">
+            <CategoryInput
+              onClick={(category) => setCustomValue("category", category)}
+              selected={category === item.label}
+              label={item.label}
+              Icon={item.icon}
+            />
+          </div>
+        ))}
       </div>
-    );
-  };
+    </div>
+  );
 
-  const renderLocationStep = () => {
-    // LOCATION
-    return (
+  const renderLocationStep = // LOCATION
+    (
       <div className="flex flex-col gap-8">
         <Heading
           title="Where is your place located?"
@@ -184,11 +181,9 @@ const RentModal = () => {
         <Map center={location?.latlng} />
       </div>
     );
-  };
 
-  const renderInfoStep = () => {
-    // INFO
-    return (
+  const renderInfoStep = // INFO
+    (
       <div className="flex flex-col gap-9">
         <Heading
           title="Share some basics about your place"
@@ -220,11 +215,9 @@ const RentModal = () => {
         />
       </div>
     );
-  };
 
-  const renderImagesStep = () => {
-    // IMAGE
-    return (
+  const renderImagesStep = // IMAGE
+    (
       <div className="flex flex-col gap-8">
         <Heading
           title="Add a photo of your place"
@@ -236,11 +229,9 @@ const RentModal = () => {
         />
       </div>
     );
-  };
 
-  const renderDescriptionStep = () => {
-    // DESCRIPTION
-    return (
+  const renderDescriptionStep = // DESCRIPTION
+    (
       <div className="flex flex-col gap-8">
         <Heading
           title="How would you describe your place?"
@@ -265,28 +256,24 @@ const RentModal = () => {
         />
       </div>
     );
-  };
 
-  const renderPriceStep = () => {
-    // PRICE
-    return (
-      <div className="flex flex-col gap-8">
-        <Heading
-          title="Now, set your price"
-          subtitle="How much do you charge per night?"
-        />
-        <Input
-          id="price"
-          label="Price"
-          type="number"
-          register={register}
-          errors={errors}
-          required
-          formatPrice
-        />
-      </div>
-    );
-  };
+  const renderPriceStep = (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Now, set your price"
+        subtitle="How much do you charge per night?"
+      />
+      <Input
+        id="price"
+        label="Price"
+        type="number"
+        register={register}
+        errors={errors}
+        required
+        formatPrice
+      />
+    </div>
+  );
 
   return (
     <Modal

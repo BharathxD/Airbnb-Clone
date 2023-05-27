@@ -6,10 +6,11 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 import dynamic from "next/dynamic";
-import { CountrySelectValue } from "../Inputs/CountrySelect";
+import CountrySelect, { CountrySelectValue } from "../Inputs/CountrySelect";
 import { Listing } from "@prisma/client";
 import queryString from "query-string";
 import { formatISO } from "date-fns";
+import Heading from "../UI/Heading";
 
 const enum STEP {
   LOCATION = 0,
@@ -86,14 +87,46 @@ const SearchModal = () => {
     step,
   ]);
 
-  switch (step) {
-    case STEP.LOCATION:
-      return;
-    case STEP.DATE:
-      return;
-    case STEP.INFO:
-      return;
-  }
+  const actionLabel = useMemo(() => {
+    if (step === STEP.INFO) {
+      return "Search";
+    }
+    return "Next";
+  }, [step]);
+
+  const secondaryActionLabel = useMemo(() => {
+    if (step === STEP.LOCATION) {
+      return undefined;
+    }
+    return "Back";
+  }, [step]);
+
+  const getBodyComponent = (step: STEP) => {
+    switch (step) {
+      case STEP.LOCATION:
+        return locationStep;
+      case STEP.DATE:
+        return;
+      case STEP.INFO:
+        return;
+      default:
+        return null;
+    }
+  };
+
+  const locationStep = (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Where do you wanna go?"
+        subtitle="Find the perfect location!"
+      />
+      <CountrySelect
+        onChange={(value: CountrySelectValue) => setLocation(value)}
+      />
+      <hr />
+      <Map center={location?.latlng} />
+    </div>
+  );
 
   return (
     <Modal
@@ -102,6 +135,7 @@ const SearchModal = () => {
       onSubmit={searchModal.onOpen}
       title="Filters"
       actionLabel="Search"
+      body={getBodyComponent(step)}
     />
   );
 };
