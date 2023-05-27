@@ -9,6 +9,10 @@
   z-index: 0 !important;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .rdrMonth {
   width: 100% !important;
 }
