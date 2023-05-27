@@ -17,7 +17,7 @@ const getReservation = async ({
   try {
     const query: IQueryParams = {
       ...(userId && { userId: userId }),
-      ...(authorId && { authorId: authorId }),
+      ...(authorId && { userId: authorId }),
       ...(listingId && { listingId: listingId }),
     };
     const reservations = await prisma.reservation.findMany({
