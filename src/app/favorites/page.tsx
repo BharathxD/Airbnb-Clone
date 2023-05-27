@@ -7,17 +7,6 @@ import FavoritesClient from "@/components/Favorites/FavoritesClient";
 const FavoritesPage = async () => {
   const currentUser = await getCurrentUser();
 
-  if (!currentUser) {
-    return (
-      <EmptyState
-        title="It seems you haven't logged in yet."
-        subtitle="Log in to access your favorites"
-        resetLabel="Back to Homepage"
-        showReset
-      />
-    );
-  }
-
   const favListings = await getFavoriteListing();
 
   if (favListings?.length === 0) {
