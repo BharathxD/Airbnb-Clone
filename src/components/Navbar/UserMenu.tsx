@@ -54,7 +54,7 @@ const UserMenu: FC<UserMenuProps> = ({ currentUser }) => {
         </div>
       </div>
       {isOpen && (
-        <div className="absolute mt-3 xl:mt-2 rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 text-sm border-[1px]">
+        <div className="absolute mt-3 xl:mt-2 max-w-screen-sm rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 text-sm border-[1px]">
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <Fragment>

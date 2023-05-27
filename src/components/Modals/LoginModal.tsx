@@ -93,7 +93,7 @@ const LoginModal = () => {
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
       <hr />
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-3">
         <Button
           icon={FcGoogle}
           label="Google"
