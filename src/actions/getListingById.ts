@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "@/libs/prismadb";
-import { SafeListing, SafeUser } from "@/types";
 import { Listing } from "@prisma/client";
 
 interface IParams {
