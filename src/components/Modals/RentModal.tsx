@@ -47,7 +47,7 @@ const RentModal = () => {
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: FieldValues) => {
       await axios.post("/api/listings", data);
-      showToast("List Created!", "success");
+      showToast("Listing Created!", "success");
     },
     onError: () => {
       showToast("List cannot be created, please try again later", "error");
