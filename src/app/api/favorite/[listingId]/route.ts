@@ -41,6 +41,7 @@ export async function PATCH(_: NextRequest, { params }: { params: IParams }) {
       // favoriteId !== listingId -> TRUE (Stays in the array)
       // favoriteId !== listingId -> FALSE (Removed from the array)
     } else {
+      
       updatedFavoriteIds = [...favoriteIds, listingId];
     }
 
