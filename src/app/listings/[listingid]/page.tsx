@@ -12,10 +12,13 @@ interface IParams {
 }
 
 const ListingPage = async ({ params }: IParams) => {
-  const listing = await getListingById(params);
+  const listing = await getListingById({ listingId: params.listingId });
   const currentUser = await getCurrentUser();
   const reservations = await getReservation({ listingId: listing?.id });
-  if (!listing) return <EmptyState />;
+  if (!listing)
+    return (
+      <EmptyState title="Something went wrong" subtitle="We'll be back soon" />
+    );
   return (
     <div className="pt-[12vh]">
       <ListingClient
