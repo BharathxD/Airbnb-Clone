@@ -1,7 +1,7 @@
 import Loader from "@/components/UI/Loader";
 
-const Loading = () => {
+const LoadingPage = () => {
   return <Loader />;
 };
 
-export default Loading;
+export default LoadingPage;
