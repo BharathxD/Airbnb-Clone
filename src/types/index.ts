@@ -22,3 +22,7 @@ export type SafeReservation = Omit<
     createdAt: string;
   };
 };
+
+export type FavoriteListing = (SafeListing & {
+  createdAt: string;
+})[];

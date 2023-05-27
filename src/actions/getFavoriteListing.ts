@@ -2,11 +2,7 @@
 
 import prisma from "@/libs/prismadb";
 import getCurrentUser from "./getCurrentUser";
-import { SafeListing } from "@/types";
-
-type FavoriteListing = (SafeListing & {
-  createdAt: string;
-})[];
+import { FavoriteListing, SafeListing } from "@/types";
 
 const getFavoriteListing = async (): Promise<
   FavoriteListing | [] | undefined
