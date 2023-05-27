@@ -17,7 +17,16 @@ export interface IListingParams {
 const getListings = async (params: IListingParams) => {
   try {
     // Extract the parameters from the input object
-    const { userId, guestCount, roomCount, bathroomCount, startDate, endDate, locationValue, category } = params;
+    const {
+      userId,
+      guestCount,
+      roomCount,
+      bathroomCount,
+      startDate,
+      endDate,
+      locationValue,
+      category,
+    } = params;
 
     // Construct the query object to be used in the Prisma query
     const query: any = {
@@ -41,15 +50,15 @@ const getListings = async (params: IListingParams) => {
             OR: [
               {
                 endDate: { gte: startDate },
-                startDate: { lte: startDate }
+                startDate: { lte: startDate },
               },
               {
                 startDate: { lte: endDate },
-                endDate: { gte: endDate }
-              }
-            ]
-          }
-        }
+                endDate: { gte: endDate },
+              },
+            ],
+          },
+        },
       };
     }
 

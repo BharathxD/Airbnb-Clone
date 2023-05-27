@@ -37,11 +37,12 @@ export async function PATCH(_: NextRequest, { params }: { params: IParams }) {
 
     if (favoriteIds.includes(listingId)) {
       // If the listingId is in the `favoriteIds` array, it will be removed from the array
-      updatedFavoriteIds = favoriteIds.filter((favoriteId) => favoriteId !== listingId)
+      updatedFavoriteIds = favoriteIds.filter(
+        (favoriteId) => favoriteId !== listingId
+      );
       // favoriteId !== listingId -> TRUE (Stays in the array)
       // favoriteId !== listingId -> FALSE (Removed from the array)
     } else {
-      
       updatedFavoriteIds = [...favoriteIds, listingId];
     }
 
