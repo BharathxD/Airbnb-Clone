@@ -97,25 +97,21 @@ const ListingClient: FC<ListingClientProps> = ({
 
   const handleSubmit = () => {
     if (!currentUser) {
-      loginModal.onOpen();
-      return;
+      return loginModal.onOpen();
     }
 
     const startDate = dateRange.startDate;
-    if (!startDate) {
-      return;
-    }
+    if (!startDate) return;
 
     const isDateReserved = disabledDates.some((date) =>
       isSameDay(date, startDate)
     );
 
     if (isDateReserved) {
-      showToast(
+      return showToast(
         "The date is already reserved, please choose another date",
         "error"
       );
-      return;
     }
 
     mutate();
