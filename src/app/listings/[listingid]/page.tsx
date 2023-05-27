@@ -3,16 +3,13 @@ import getListingById from "@/actions/getListingById";
 import getReservation from "@/actions/getReservation";
 import ListingClient from "@/components/Listings/ListingClient";
 import EmptyState from "@/components/UI/EmptyState";
-import { Listing } from "@prisma/client";
 
 interface IParams {
-  params: {
-    listingId: Listing["id"];
-  };
+  listingId?: string;
 }
 
-const ListingPage = async ({ params }: IParams) => {
-  const listing = await getListingById({ listingId: params.listingId });
+const ListingPage = async ({ params }: { params: IParams }) => {
+  const listing = await getListingById(params);
   const currentUser = await getCurrentUser();
   const reservations = await getReservation({ listingId: listing?.id });
   if (!listing)
