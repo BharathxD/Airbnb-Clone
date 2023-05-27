@@ -23,7 +23,9 @@ const PropertiesClient: FC<PropertiesClient> = ({ listings, currentUser }) => {
       axios.delete(`/api/listings/${id}`);
     },
     onSuccess: () => {
-      router.refresh();
+      setTimeout(() => {
+        router.refresh();
+      }, 300);
       showToast("Listing Deleted", "success");
     },
     onError(error: AxiosError) {

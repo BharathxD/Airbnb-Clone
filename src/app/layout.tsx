@@ -7,6 +7,7 @@ import LoginModal from "@/components/Modals/LoginModal";
 import getCurrentUser from "../actions/getCurrentUser";
 import RentModal from "@/components/Modals/RentModal";
 import RtkProvider from "@/providers/RtkProvider";
+import SearchModal from "@/components/Modals/SearchModal";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
         <RtkProvider>
           <ToasterProvider />
           <RegisterModal />
+          <SearchModal />
           <LoginModal />
           <RentModal />
           <Navbar currentUser={currentUser} />

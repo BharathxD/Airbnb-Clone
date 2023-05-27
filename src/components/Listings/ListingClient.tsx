@@ -20,6 +20,7 @@ import showToast from "../UI/Toast";
 import ListingReservation from "./ListingReservation";
 import { Range } from "react-date-range";
 
+// The key: "selection" is used as a unique identifier for the date range selection
 const initialDateRange = {
   startDate: new Date(),
   endDate: new Date(),
