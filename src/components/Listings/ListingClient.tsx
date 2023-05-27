@@ -119,7 +119,7 @@ const ListingClient: FC<ListingClientProps> = ({
 
   return (
     <Container>
-      <div className="max-w-screen-lg mx-auto mb-20">
+      <div className="max-w-screen-lg mx-auto mb-4 sm:mb-auto">
         <div className="flex flex-col gap-6">
           <ListingHead
             currentUser={currentUser}
@@ -138,7 +138,7 @@ const ListingClient: FC<ListingClientProps> = ({
               bathroomCount={listing.bathroomCount}
               locationValue={listing.locationValue}
             />
-            <div className="order-first mb-10 md:order-last md: col-span-3">
+            <div className="order-first mb-10 md:order-last md:col-span-3">
               <ListingReservation
                 price={listing.price}
                 totalPrice={totalPrice}

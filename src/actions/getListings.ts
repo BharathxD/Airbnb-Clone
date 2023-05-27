@@ -31,7 +31,8 @@ const getListings = async (params: IListingParams) => {
 
     /**
      * If both `startDate` and `endDate` are provided, exclude listings with conflicting reservations
-     * The `NOT EXISTS` condition ensures that only listings without conflicting reservations are included in the result set.
+     * The `NOT` condition ensures that only listings without conflicting reservations are included in the result set.
+     * In simple words, the filter won't include the listing which conflicts with the reservation dates
      */
     if (startDate && endDate) {
       query.NOT = {
