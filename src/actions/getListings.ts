@@ -29,6 +29,29 @@ const getListings = async (params: IListingParams) => {
       ...(locationValue && { locationValue }),
     };
 
+    /**
+     * If both `startDate` and `endDate` are provided, exclude listings with conflicting reservations
+     * The `NOT EXISTS` condition ensures that only listings without conflicting reservations are included in the result set.
+     */
+    if (startDate && endDate) {
+      query.NOT = {
+        reservations: {
+          some: {
+            OR: [
+              {
+                endDate: { gte: startDate },
+                startDate: { lte: startDate }
+              },
+              {
+                startDate: { lte: endDate },
+                endDate: { gte: endDate }
+              }
+            ]
+          }
+        }
+      };
+    }
+
     // Retrieve the listings from the database based on the constructed query
     const listings = await prisma.listing.findMany({
       where: query,
