@@ -8,7 +8,7 @@ import {
   GiForestCamp,
   GiIsland,
   GiWindmill,
-} from "react-icons/Gi";
+} from "react-icons/gi";
 import { FaSkiing } from "react-icons/fa";
 import { BsSnow } from "react-icons/bs";
 import { IoDiamond } from "react-icons/io5";
