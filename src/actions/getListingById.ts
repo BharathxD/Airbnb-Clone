@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/libs/prismadb";
 import { Listing } from "@prisma/client";
 
