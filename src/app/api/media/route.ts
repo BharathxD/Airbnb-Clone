@@ -34,7 +34,7 @@ export async function GET(req: NextRequest, _: NextResponse) {
     console.error(
       `Failed to generate presigned URL: ${(error as Error).message}`
     );
-    return new NextResponse("Failed to generate signed URL", {
+    return new NextResponse("Failed to generate the signed URL", {
       status: StatusCodes.INTERNAL_SERVER_ERROR,
     });
   }
