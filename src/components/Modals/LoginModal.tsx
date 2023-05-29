@@ -96,7 +96,7 @@ const LoginModal = () => {
       <div className="flex flex-col gap-3">
         <Button
           icon={FcGoogle}
-          label="Google"
+          label="Continue with Google"
           onClick={() => {
             signIn("google");
           }}
@@ -104,7 +104,7 @@ const LoginModal = () => {
         />
         <Button
           icon={AiFillGithub}
-          label="Github"
+          label="Continue with Github"
           onClick={() => {
             signIn("github");
           }}

@@ -47,7 +47,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME || "",
       Key: key,
     } satisfies DeleteObjectRequest;
-    s3.deleteObject(BucketParams, function (err, data) {
+    s3.deleteObject(BucketParams, function (err: any, data: any) {
       if (err) console.log(err);
     });
     return new NextResponse("Ok", {
