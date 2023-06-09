@@ -31,7 +31,7 @@ const getCurrentUser = async (): Promise<SafeUser | null> => {
       updatedAt: currentUser.updatedAt.toISOString(),
       emailVerified: currentUser.emailVerified?.toISOString() || null,
     };
-  } catch (error: any) {
+  } catch (error: any) {iu
     throw new Error(error);
   }
 };
